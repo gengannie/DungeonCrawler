@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Cards {
     protected String nameOfCard;
     protected String description;
@@ -31,8 +33,20 @@ public class Cards {
     }
 
     //MODIFIES: Hero
+    //EFFECTS: perform behavior of card on hero
+    public void performOnHero(Hero h) {
+    }
+
+    //MODIFIES: SmallMonsters
     //EFFECTS: perform behavior of card
-    public void performBehavior(Hero h){
+    public void performOnMonsters(Hero h, ArrayList<SmallMonsters> listOfSmallM) {
+        for (SmallMonsters m : listOfSmallM) {
+            if (m.getIfInSight()) {
+                m.changeCanMove();
+                m.getHit(hitPoints);
+                break;
+            }
+        }
 
     }
 }

@@ -1,8 +1,10 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Hero {
     private static final int NUM_OF_TURNS = 2;
-    private static final int VISIBILITY = 5;
+    public static final int VISIBLE = 3;
     private static final int MAX_NUM_OF_CARDS = 10;
     public static final int MAX_HEALTH = 10;
 
@@ -93,18 +95,34 @@ public class Hero {
     //MODIFIES: this
     //EFFECTS: modifies this hero's movePoints by amount
     public void changeMovePoints(int amount) {
-        hitPoints += amount;
+        moveSquares += amount;
     }
 
-    //EFFECTS: return list of cards in inventory
-    public CardsList seeListOfCards() {
-        return cardInventory;
-
+    public int getMoveSquares() {
+        return moveSquares;
     }
 
     //MODIFIES: this
     //EFFECTS: adds coinAmount to coins this hero has
     public void addCoins(int coinAmount) {
         coinsInInventory += coinAmount;
+    }
+
+    public ArrayList<String> getCardDes() {
+        return cardInventory.getCardsDescription();
+    }
+
+    //REQUIRES: cardInventory to be not empty
+    //MODIFIES: this
+    //EFFECTS: modifies hero attributes according to behavior of card
+    public void useCard(int indexInList, ArrayList<SmallMonsters> allMonsters) {
+        Cards returnedCard = cardInventory.getCardByIndex(indexInList);
+        returnedCard.performOnHero(this);
+        returnedCard.performOnMonsters(this, allMonsters);
+
+    }
+
+    public String getName() {
+        return myName.substring(0, 1);
     }
 }

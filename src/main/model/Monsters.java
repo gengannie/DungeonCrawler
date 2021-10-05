@@ -2,7 +2,7 @@ package model;
 
 public interface Monsters {
     //EFFECTS: return integer of how many damage this monster deals
-    int attack();
+    void attack(Hero h);
 
     //EFFECTS: return integer of how much this monster can move
     void updatePosition(int x, int y);

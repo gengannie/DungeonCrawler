@@ -22,4 +22,10 @@ public class CardsList {
         }
         return listOfNamesAndDes;
     }
+
+    //REQUIRES: this ind is valid
+    //EFFECTS: return card in listOfCard
+    public Cards getCardByIndex(int ind) {
+        return listOfCard.get(ind);
+    }
 }

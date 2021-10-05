@@ -9,7 +9,7 @@ public class HealingPotion extends Cards {
     @Override
     //MODIFIES: Hero
     //EFFECTS: perform behavior of card
-    public void performBehavior(Hero h) {
+    public void performOnHero(Hero h) {
         h.heal(hitPoints);
     }
 
