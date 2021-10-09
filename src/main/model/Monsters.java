@@ -8,7 +8,7 @@ public interface Monsters {
     void updatePosition(int x, int y);
 
     //EFFECTS: returns true if this monster is dead
-    boolean getHit(int amount);
+    void getHit(int amount);
 
     boolean getCanMove();
 

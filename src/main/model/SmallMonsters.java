@@ -3,6 +3,7 @@ package model;
 //TODO: add class generic descriptions
 // TODO: add awareness of monsters to the hero
 // TODO: start to add tests on classes: Hero, SmallMonsters, Cards
+// Superclass of all the specific monsters, contain default behavior
 public class SmallMonsters implements Monsters {
     protected int attackPoints;
     protected int moveAmount;
@@ -29,32 +30,48 @@ public class SmallMonsters implements Monsters {
     public boolean getIfInSight() {
         return (inSightOfHero);
     }
+    //MODIFIES: this
+    //EFFECTS: changes if this monster is in sight of the  hero or not
 
     public void changeThisSight() {
         inSightOfHero = !inSightOfHero;
-
     }
 
+    //MODIFIES: Hero
+    //EFFECTS: "attacks" hero by the number of attackPoints it has
     @Override
     public void attack(Hero h) {
         h.getAttacked(attackPoints);
     }
 
     @Override
+    //MODIFIES: this
     //EFFECTS: changes the position of the monster by x and y amounts
     public void updatePosition(int x, int y) {
         if (canMove) {
+            if (x > moveAmount) {
+                x = moveAmount;
+            }
+            if (y > moveAmount) {
+                y = moveAmount;
+            }
             posX += x;
             posY += y;
         }
     }
 
     //MODIFIES: this
-    //EFFECTS: health decreases by amount and return false if health <= 0
+    //EFFECTS: health decreases by amount and changes state of isDead if health <= 0
     @Override
-    public boolean getHit(int amount) {
+    public void getHit(int amount) {
         health -= amount;
-        return (health > 0);
+        if (health <= 0) {
+            isDead = true;
+        }
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     @Override
@@ -63,8 +80,10 @@ public class SmallMonsters implements Monsters {
     }
 
     @Override
+    // EFFECTS: changes canMove to true if itself is false, false otherwise
     public void changeCanMove() {
-        canMove = false;
+
+        canMove = !canMove;
     }
 
     public String getName() {
@@ -77,6 +96,10 @@ public class SmallMonsters implements Monsters {
 
     public int getPosY() {
         return posY;
+    }
+
+    public boolean getIsDead() {
+        return isDead;
     }
 
 

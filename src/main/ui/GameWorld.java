@@ -7,6 +7,8 @@ import model.SmallMonsters;
 import java.util.ArrayList;
 import java.util.Random;
 
+// Represents the model and behavior of a console user-interface
+// lays out basic world construction
 public class GameWorld {
     protected static final int SQUARE_DIM = 20;
     protected int numOfMonsters;
@@ -36,11 +38,10 @@ public class GameWorld {
         Random seed = new Random();
         for (int i = 0; i < numOfMonsters; i++) {
             boolean identicalPos = true;
-            while (identicalPos) {
+            while (true) {
                 int randX = (seed.nextInt(SQUARE_DIM));
                 int randY = (seed.nextInt(SQUARE_DIM));
                 if (worldGrid[randX][randY] == 0 && (randX != 0 && randY != 0)) {
-                    identicalPos = false;
                     worldGrid[randX][randY] = 1;
                     SmallMonsters addRat = new Rat(randX, randY);
                     allMonsters.add(addRat);
@@ -55,22 +56,30 @@ public class GameWorld {
         System.out.println("Welcome to the game, please input your hero's name :)");
     }
 
-    //TODO
-    public void displayWorld(Hero h, int turns) {
-        int displayDimensions = h.VISIBLE;
-        int startInd = 0;
-        int startX = h.getPosX();
-        int startY = h.getPosY();
-        for (int i = startX; i < displayDimensions + startX; i++) {
-            for (int j = startY; j < displayDimensions + startY; j++) {
-                if (i == startX && j == startX) {
+    public void testTHis() {
+        for (SmallMonsters m : allMonsters) {
+            if (m.getIfInSight()) {
+                System.out.println(m.getName() + " is at " + m.getPosX() + " " + m.getPosY());
+            }
+        }
+    }
+
+    public void displayCurrWorld(Hero h, int turns) {
+        for (int i = h.getPosX(); i < h.VISIBLE + h.getPosX(); i++) {
+            for (int j = h.getPosY(); j < h.VISIBLE + h.getPosY(); j++) {
+                if (i == h.getPosX() && j == h.getPosY()) {
                     System.out.print(h.getName());
                 } else if (worldGrid[i][j] == 1) {
-                    SmallMonsters result = allMonsters.get(startInd);
-                    System.out.print(result.getName());
-                    startInd += 1;
-                    canAttack = true;
-                    result.changeThisSight();
+                    for (SmallMonsters m : allMonsters) {
+                        if (m.getPosX() == i && m.getPosY() == j) {
+                            System.out.print(m.getName() + " " + m.getHealth());
+                            if (m.getIfInSight() == false) {
+                                m.changeThisSight();
+                            }
+                            canAttack = true;
+                            break;
+                        }
+                    }
                 } else {
                     System.out.print("_");
                 }
@@ -78,15 +87,12 @@ public class GameWorld {
             System.out.println();
         }
         displayOptions(h, turns);
-        displayHeroStats(h);
-
-
     }
 
-    //TODO: 1. seems pretty done
-    //TODO: movement is bad
+    //TODO: 1. seems pretty done v
+    //TODO: movement is bad v
     //TODO: no world objects to interact
-    //TODO: 4. attack monsters!
+    //TODO: 4. attack monsters! v
 
     //EFFECTS: displays what the user can do, corresponding to a integer
     public void displayOptions(Hero h, int turns) {
@@ -97,6 +103,7 @@ public class GameWorld {
         System.out.println("2. Move left, right, up, or down");
         System.out.println("3. Interact with world objects");
         System.out.println("4. Attack monsters!");
+        displayHeroStats(h);
 
     }
 
@@ -112,13 +119,13 @@ public class GameWorld {
         }
 
     }
+
     // TODO: they can't really move, and the conditions to attack are unclear
     ///TODO: find a way to update the state of monsters
     //MODIFIES: this
     //EFFECTS: updates monster position in world, monster moves, and hero health might decrease
     public void moveMonsters(Hero h) {
         for (SmallMonsters m : allMonsters) {
-
             if (m.getIfInSight() && m.getCanMove() == true) {
                 m.attack(h);
             }
@@ -142,6 +149,46 @@ public class GameWorld {
 
     public void processCardBehavior(Hero h, int ind) {
         h.useCard(ind, allMonsters);
+    }
 
+    // MODIFIES: this, Hero
+    // EFFECTS: remove Hero or monsters from the world if health is <= 0
+    public void updateDeaths(Hero h) {
+        if (h.getIsDead()) {
+            gameOver();
+        }
+    }
+
+    //EFFECTS: terminates program if hero has died
+    public void gameOver() {
+        System.out.println("Sorry, your hero has died :(");
+        System.exit(-1);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: removes this monster from display if dead
+    public void removeFromWorldGrid(SmallMonsters sm) {
+        worldGrid[sm.getPosX()][sm.getPosY()] = 0;
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Hero hits a random monster nearby that he can see
+    public void attackMonsters(Hero h) {
+        if (canAttack) {
+            for (SmallMonsters sm : allMonsters) {
+                if (sm.getIfInSight() && sm.getIsDead() == false) {
+                    sm.getHit(h.getHitPoints());
+                    System.out.println("You just hit this" + sm.getName());
+                    if (sm.getIsDead()) {
+                        allMonsters.remove(sm);
+                        System.out.println(sm.getName() + "Just died!");
+                        removeFromWorldGrid(sm);
+                    }
+                    h.updateManaBar(h.getHitPoints());
+                    break;
+                }
+            }
+        }
     }
 }

@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+// Represents the list of cards the Hero can interact with
 public class CardsList {
     private ArrayList<Cards> listOfCard;
 
@@ -23,9 +25,18 @@ public class CardsList {
         return listOfNamesAndDes;
     }
 
-    //REQUIRES: this ind is valid
+    //REQUIRES: this ind is valid (exists in arraylist)
     //EFFECTS: return card in listOfCard
     public Cards getCardByIndex(int ind) {
         return listOfCard.get(ind);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: updates listOfCard so that it contains a new card
+    // TODO: make this random!
+    public void getNewRandomCard() {
+        Cards newCard = new StunCard();
+        listOfCard.add(newCard);
+
     }
 }

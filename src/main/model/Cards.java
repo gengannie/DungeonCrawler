@@ -5,16 +5,14 @@ import java.util.ArrayList;
 public class Cards {
     protected String nameOfCard;
     protected String description;
-    protected String type;
     protected int hitPoints;
     protected boolean canRegenerate;
 
-    public Cards(String name, String des, String type, int hitPoints, boolean reg) {
+    public Cards(String name, String des, int hitPoints, boolean reg) {
         nameOfCard = name;
         description = des;
-        this.type = type;
         this.hitPoints = hitPoints;
-        canRegenerate = false;
+        canRegenerate = reg;
     }
 
     //EFFECTS: return name of this card
@@ -27,18 +25,13 @@ public class Cards {
         return description;
     }
 
-    //EFFECTS: return type of this card
-    public String getType() {
-        return type;
-    }
-
     //MODIFIES: Hero
     //EFFECTS: perform behavior of card on hero
     public void performOnHero(Hero h) {
     }
 
     //MODIFIES: SmallMonsters
-    //EFFECTS: perform behavior of card
+    //EFFECTS: perform behavior of card on list of monsters given
     public void performOnMonsters(Hero h, ArrayList<SmallMonsters> listOfSmallM) {
         for (SmallMonsters m : listOfSmallM) {
             if (m.getIfInSight()) {
@@ -47,6 +40,5 @@ public class Cards {
                 break;
             }
         }
-
     }
 }
