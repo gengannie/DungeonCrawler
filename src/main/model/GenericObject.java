@@ -1,5 +1,6 @@
 package model;
 
+// Abstract class outlining some variables of a generic object (cannot move)
 public abstract class GenericObject implements ObjectsInWorld {
     protected boolean isInWorld;
     protected boolean canTouch;

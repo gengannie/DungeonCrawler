@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+// Superclass of different types of cards, contains common behavior and characteristics of cards
 public class Cards {
     protected String nameOfCard;
     protected String description;

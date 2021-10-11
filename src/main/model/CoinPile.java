@@ -1,5 +1,6 @@
 package model;
 
+// A pile of coins that is a subclass of GenericObject
 public class CoinPile extends GenericObject {
     private int coinAmount;
 

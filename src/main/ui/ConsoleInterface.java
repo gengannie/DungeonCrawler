@@ -4,6 +4,8 @@ import model.Hero;
 
 import java.util.Scanner;
 
+// Runnable file: where you start interacting with console interface
+// Initializes game world and iterates until game is over
 public class ConsoleInterface {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

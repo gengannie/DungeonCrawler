@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests for Cards class and some StunCard (subclass) behaviors
 public class CardTest {
     Cards c;
 

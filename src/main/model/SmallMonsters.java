@@ -1,8 +1,5 @@
 package model;
 
-//TODO: add class generic descriptions
-// TODO: add awareness of monsters to the hero
-// TODO: start to add tests on classes: Hero, SmallMonsters, Cards
 // Superclass of all the specific monsters, contain default behavior
 public class SmallMonsters implements Monsters {
     protected int attackPoints;

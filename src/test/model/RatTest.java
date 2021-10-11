@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+// Tests for Rat class
 public class RatTest {
     SmallMonsters rat;
 

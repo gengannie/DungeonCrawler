@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests for Hero class
 class HeroTest {
     Hero aHero;
 
@@ -80,6 +81,15 @@ class HeroTest {
     }
 
     @Test
+    void testInvalidHeal() {
+        aHero.getAttacked(aHero.MAX_HEALTH);
+        assertTrue(aHero.getIsDead());
+        aHero.heal(0);
+        assertTrue(aHero.getCurrentHealth() == 0);
+        assertTrue(aHero.getIsDead());
+
+    }
+    @Test
     void testSmallHeal() {
         aHero.getAttacked(2);
         aHero.heal(1);
@@ -124,7 +134,6 @@ class HeroTest {
     @Test
     void getMaxTurns() {
         assertEquals(aHero.getMaxTurns(), 2);
-
     }
 
     @Test

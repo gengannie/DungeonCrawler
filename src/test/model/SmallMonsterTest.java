@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests for SmallMonster class
 public class SmallMonsterTest {
     SmallMonsters mons;
     @BeforeEach
@@ -60,6 +61,15 @@ public class SmallMonsterTest {
     }
 
     @Test
+    void changeMultipleInSight() {
+        assertFalse(mons.getIfInSight());
+        mons.changeThisSight();
+        assertTrue ( mons.getIfInSight());
+        mons.changeThisSight();
+        assertFalse(mons.getIfInSight());
+    }
+
+    @Test
     void testHitTillDead(){
         mons.getHit(2);
         assertEquals(mons.getHealth(), 0);
@@ -81,6 +91,15 @@ public class SmallMonsterTest {
         mons.updatePosition(1,1);
         assertEquals(mons.getPosY(),0);
         assertEquals(mons.getPosX(),0);
+    }
+
+    @Test
+    void multipleChangeCanMove() {
+        assertTrue(mons.getCanMove());
+        mons.changeCanMove();
+        assertFalse(mons.getCanMove());
+        mons.changeCanMove();
+        assertTrue(mons.getCanMove());
     }
 
     @Test

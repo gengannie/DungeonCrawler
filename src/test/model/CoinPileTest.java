@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests for CoinPile class and its inherited methods
 public class CoinPileTest {
     GenericObject coinPile;
 
@@ -31,6 +32,15 @@ public class CoinPileTest {
         assertTrue(coinPile.getPresence());
         coinPile.changePresence();
         assertFalse(coinPile.getPresence());
+    }
+
+    @Test
+    void changeMultPresence() {
+        assertTrue(coinPile.getPresence());
+        coinPile.changePresence();
+        assertFalse(coinPile.getPresence());
+        coinPile.changePresence();
+        assertTrue(coinPile.getPresence());
     }
 
     @Test
