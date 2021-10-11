@@ -120,8 +120,6 @@ public class GameWorld {
 
     }
 
-    // TODO: they can't really move, and the conditions to attack are unclear
-    ///TODO: find a way to update the state of monsters
     //MODIFIES: this
     //EFFECTS: updates monster position in world, monster moves, and hero health might decrease
     public void moveMonsters(Hero h) {

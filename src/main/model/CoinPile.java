@@ -9,7 +9,7 @@ public class CoinPile extends GenericObject {
     }
 
     @Override
-    public void getBehavior(Hero h) {
+    public void performBehavior(Hero h) {
         h.addCoins(coinAmount);
     }
 

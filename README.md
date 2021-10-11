@@ -3,14 +3,23 @@
 ## Dungeon Crawler - turn based
 
 **User Stories**
+- As a user, I want to be able to add a Hero into the world and start playing 
+- As a user, I want to be able to add to Hero's experience mana by attacking and removing monsters from the world
+- As a user, I want to be able to add coins to my inventory by picking up a coin pile in the world
+- As a user, I want to be able to add cards in my inventory by attacking a certain number of monsters
+  
 - As a user, I want to be able to view how many turns I have left
 - As a user, I want to be able to view the monsters and objects immediately surrounding me
+  
 - As a user, I want to be able to move around in the world
+  
 - As a user, I want to be able to select to attack monsters that I can see
 - As a user, I want to be able to select a card in my inventory and use it
-- As a user, I want to be able to add cards to my inventory from the store 
-- As a user, I want to be able to add gold  from chests or from a full experience mana
-- As a user, I want to be able to add gold to my inventory from the world
-- As a user, I want to be able to add to my experience mana by attacking monsters in the world
+
+
+- As a user, I want the game world to be populated with monsters and generic objects 
+
+
+
 
 

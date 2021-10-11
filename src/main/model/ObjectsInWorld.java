@@ -1,7 +1,7 @@
 package model;
 
 public interface ObjectsInWorld {
-    boolean presence();
+    boolean getPresence();
 
     boolean canBeTouched();
 
@@ -9,5 +9,5 @@ public interface ObjectsInWorld {
 
     int getPosY();
 
-    void getBehavior(Hero h);
+    void performBehavior(Hero h);
 }

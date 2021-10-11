@@ -11,13 +11,15 @@ public abstract class GenericObject implements ObjectsInWorld {
         canTouch = touch;
         posX = x;
         posY = y;
-
-
     }
 
     @Override
-    public boolean presence() {
+    public boolean getPresence() {
         return isInWorld;
+    }
+
+    public void changePresence() {
+        isInWorld = !isInWorld;
     }
 
     @Override
@@ -35,7 +37,4 @@ public abstract class GenericObject implements ObjectsInWorld {
         return posY;
     }
 
-    @Override
-    public void getBehavior(Hero h) {
-    }
 }

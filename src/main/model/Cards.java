@@ -26,8 +26,9 @@ public class Cards {
     }
 
     //MODIFIES: Hero
-    //EFFECTS: perform behavior of card on hero
+    //EFFECTS: perform behavior of card
     public void performOnHero(Hero h) {
+        h.heal(hitPoints);
     }
 
     //MODIFIES: SmallMonsters

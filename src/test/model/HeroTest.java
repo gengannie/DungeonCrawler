@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class HeroTest {
@@ -14,17 +16,42 @@ class HeroTest {
     }
 
     @Test
-    void changeMoveTest(){
+    void updateMan() {
+        aHero.updateManaBar(4);
+        assertEquals(aHero.getManaBar(), 4);
+    }
+
+    @Test
+    void updateToMaxMana(){
+        aHero.updateManaBar(10);
+        assertEquals(aHero.getManaBar(), 0);
+        assertEquals(aHero.getCardDes().size() / 2, 3);
+    }
+
+    @Test
+    void updateToOverMaxMana(){
+        aHero.updateManaBar(15);
+        assertEquals(aHero.getManaBar(), 5);
+        assertEquals(aHero.getCardDes().size() / 2, 3);
+    }
+
+    @Test
+    void getCoins(){
+        aHero.addCoins(5);
+        assertEquals(aHero.getCoinsInInventory(), 5);
+    }
+
+    @Test
+    void changeMoveTest() {
         int howManyMove = aHero.getMoveSquares();
         assertEquals(howManyMove, 3);
         aHero.changeMovePoints(1);
         assertEquals(aHero.getMoveSquares(), 4);
 
-
     }
 
     @Test
-    void testRightReturns(){
+    void testRightReturns() {
         assertEquals(aHero.getName(), "t");
     }
 
@@ -53,42 +80,63 @@ class HeroTest {
     }
 
     @Test
-    void testSmallHeal(){
+    void testSmallHeal() {
         aHero.getAttacked(2);
         aHero.heal(1);
-        assertTrue(aHero.getCurrentHealth()== aHero.MAX_HEALTH-1);
+        assertTrue(aHero.getCurrentHealth() == aHero.MAX_HEALTH - 1);
     }
 
     @Test
     void testLargeHeal() {
         aHero.heal(10);
-        assertTrue(aHero.getCurrentHealth()== aHero.MAX_HEALTH);
+        assertTrue(aHero.getCurrentHealth() == aHero.MAX_HEALTH);
 
     }
 
     @Test
-    void moveHeroPos(){
-        aHero.moveHero(2,3);
+    void moveHeroPos() {
+        aHero.moveHero(2, 3);
         assertTrue(aHero.getPosX() == 2);
         assertTrue(aHero.getPosY() == 3);
     }
 
     @Test
-    void moveHeroPosMultTimes(){
-        aHero.moveHero(2,3);
+    void moveHeroPosMultTimes() {
+        aHero.moveHero(2, 3);
         assertTrue(aHero.getPosX() == 2);
         assertTrue(aHero.getPosY() == 3);
-        aHero.moveHero(5,-3);
-        assertTrue(aHero.getPosX() == 7);
+        aHero.moveHero(5, -3);
+        assertTrue(aHero.getPosX() == 5);
         assertTrue(aHero.getPosY() == 0);
+        aHero.moveHero(10,10);
+        assertTrue(aHero.getPosX() == 8);
+        assertTrue(aHero.getPosY() == 3);
+
     }
 
     @Test
-    void moveHeroTestNeg(){
-        aHero.moveHero(-2,-3);
+    void moveHeroTestNeg() {
+        aHero.moveHero(-2, -3);
         assertTrue(aHero.getPosX() == 0);
         assertTrue(aHero.getPosY() == 0);
 
+    }
+    @Test
+    void getMaxTurns() {
+        assertEquals(aHero.getMaxTurns(), 2);
+
+    }
+
+    @Test
+    void getHitPoints() {
+        assertEquals(aHero.getHitPoints(), 3);
+    }
+
+    @Test
+    void useCardHeal() {
+        aHero.getAttacked(10);
+        aHero.useCard(0, new ArrayList<>() );
+        assertEquals(aHero.getCurrentHealth(), 7);
     }
 
 }
