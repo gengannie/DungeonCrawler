@@ -7,6 +7,7 @@ public abstract class GenericObject implements ObjectsInWorld {
     protected int posX;
     protected int posY;
 
+    // EFFECTS: initializes generic object with default attributes with certain x,y position
     public GenericObject(boolean inWorld, boolean touch, int x, int y) {
         isInWorld = inWorld;
         canTouch = touch;
@@ -19,12 +20,14 @@ public abstract class GenericObject implements ObjectsInWorld {
         return isInWorld;
     }
 
+    //MODIFIES: this
+    //EFFECTS: if isInWorld is true, make if false and vice versa
     public void changePresence() {
         isInWorld = !isInWorld;
     }
 
     @Override
-    public boolean canBeTouched() {
+    public boolean getCanTouch() {
         return canTouch;
     }
 

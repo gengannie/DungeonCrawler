@@ -32,8 +32,7 @@ public class CardsList {
     }
 
     //MODIFIES: this
-    //EFFECTS: updates listOfCard so that it contains a new card
-    // TODO: make this random!
+    //EFFECTS: updates listOfCard so that it contains a new card. TODO: in the future make this process random
     public void getNewRandomCard() {
         Cards newCard = new StunCard();
         listOfCard.add(newCard);

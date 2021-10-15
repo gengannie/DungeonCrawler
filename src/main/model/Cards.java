@@ -9,6 +9,7 @@ public class Cards {
     protected int hitPoints;
     protected boolean canRegenerate;
 
+    //EFFECTS: initializes card with default attributes
     public Cards(String name, String des, int hitPoints, boolean reg) {
         nameOfCard = name;
         description = des;

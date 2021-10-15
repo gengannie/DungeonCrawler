@@ -36,6 +36,8 @@ public class Hero {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: updates mana bar, if exceeds FULL_MANA, a new card is placed in inventory and returns updated mana
     public int updateManaBar(int points) {
         manaBar += points;
         if (manaBar >= FULL_MANA) {

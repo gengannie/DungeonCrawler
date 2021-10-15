@@ -45,7 +45,7 @@ public class CoinPileTest {
 
     @Test
     void canBeTouched() {
-        assertTrue(coinPile.canBeTouched());
+        assertTrue(coinPile.getCanTouch());
     }
 
     @Test

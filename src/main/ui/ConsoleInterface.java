@@ -6,7 +6,10 @@ import java.util.Scanner;
 
 // Runnable file: where you start interacting with console interface
 // Initializes game world and iterates until game is over
+
 public class ConsoleInterface {
+    // MODIFIES: this, GameWorld
+    // EFFECTS: runs the program by initializing a hero and GameWorld
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         GameWorld gameOne = new LevelOne(250);
@@ -18,7 +21,6 @@ public class ConsoleInterface {
         while (true) {
             while (currentTurn > 0) {
                 gameOne.displayCurrWorld(mainCharacter, currentTurn);
-                gameOne.testTHis();
                 String input = scanner.nextLine();
                 iterations(input, gameOne, mainCharacter);
                 currentTurn -= 1;
@@ -31,6 +33,9 @@ public class ConsoleInterface {
         }
     }
 
+
+    //REQUIRES: input to be valid string
+    //EFFECTS: iterates the various options the hero has until user terminates the game
     public static void iterations(String input, GameWorld gameOne, Hero mainCharacter) {
         Scanner scanner = new Scanner(System.in);
         if (input.equals("QUIT")) {

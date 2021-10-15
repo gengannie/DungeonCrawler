@@ -3,7 +3,7 @@ package model;
 public interface ObjectsInWorld {
     boolean getPresence();
 
-    boolean canBeTouched();
+    boolean getCanTouch();
 
     int getPosX();
 

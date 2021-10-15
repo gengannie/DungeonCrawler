@@ -9,6 +9,8 @@ public class CoinPile extends GenericObject {
         coinAmount = amount;
     }
 
+    //MODIFIES: Hero
+    //EFFECTS: adds certain amount of coins to Hero
     @Override
     public void performBehavior(Hero h) {
         h.addCoins(coinAmount);

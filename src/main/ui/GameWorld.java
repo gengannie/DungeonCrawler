@@ -30,10 +30,9 @@ public class GameWorld {
         canAttack = false;
 
     }
-    //MODIFIES: this
-    //EFFECTS: selects a random place to insert a monster
-    // 1 is monster
 
+    //MODIFIES: this
+    //EFFECTS: selects a random place to insert a monster, where 1 is a monster
     public void placeMonstersInWorld(int numOfMonsters) {
         Random seed = new Random();
         for (int i = 0; i < numOfMonsters; i++) {
@@ -52,18 +51,12 @@ public class GameWorld {
 
     }
 
+    // EFFECTS: display initial message to user
     public void displayIntroMessage() {
         System.out.println("Welcome to the game, please input your hero's name :)");
     }
 
-    public void testTHis() {
-        for (SmallMonsters m : allMonsters) {
-            if (m.getIfInSight()) {
-                System.out.println(m.getName() + " is at " + m.getPosX() + " " + m.getPosY());
-            }
-        }
-    }
-
+    // EFFECTS: displays the 2D array grid of the "world"
     public void displayCurrWorld(Hero h, int turns) {
         for (int i = h.getPosX(); i < h.VISIBLE + h.getPosX(); i++) {
             for (int j = h.getPosY(); j < h.VISIBLE + h.getPosY(); j++) {
@@ -89,10 +82,6 @@ public class GameWorld {
         displayOptions(h, turns);
     }
 
-    //TODO: 1. seems pretty done v
-    //TODO: movement is bad v
-    //TODO: no world objects to interact
-    //TODO: 4. attack monsters! v
 
     //EFFECTS: displays what the user can do, corresponding to a integer
     public void displayOptions(Hero h, int turns) {
@@ -107,7 +96,7 @@ public class GameWorld {
 
     }
 
-    // TODO
+    //EFFECTS: displays the current card inventory of hero
     public void displayCardInfo(Hero h) {
         ArrayList<String> returnedCardList = h.getCardDes();
         int currInd = 1;
@@ -145,6 +134,8 @@ public class GameWorld {
 
     }
 
+    //MODIFIES: Hero, SmallMonsters
+    //EFFECTS: calls method in Cards class to perform card behavior on selected players
     public void processCardBehavior(Hero h, int ind) {
         h.useCard(ind, allMonsters);
     }
