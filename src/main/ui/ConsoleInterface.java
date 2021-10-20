@@ -51,7 +51,6 @@ public class ConsoleInterface {
             mainCharacter.moveHero(1, 1);
         } else if (input.equals("4")) {
             gameOne.attackMonsters(mainCharacter);
-
         }
 
     }

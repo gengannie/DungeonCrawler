@@ -12,6 +12,7 @@ public class SmallMonsters implements Monsters {
     protected String nameOfMonster;
     protected boolean inSightOfHero;
 
+    //EFFECTS: constructs a small monster with default characteristics, world location, and attack points
     public SmallMonsters(int attack, int move, int health, int posX, int posY) {
         attackPoints = attack;
         moveAmount = move;

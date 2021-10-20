@@ -4,6 +4,7 @@ package model;
 public class CoinPile extends GenericObject {
     private int coinAmount;
 
+    // EFFECTS: constructs a coinpile with certain amount of coin, position, and default attributes
     public CoinPile(boolean inWorld, int x, int y, int amount) {
         super(inWorld, true, x, y);
         coinAmount = amount;

@@ -13,11 +13,14 @@ Finished:
 - As a user, I want to be able to move around in the world
 - As a user, I want to be able to select to attack monsters that I can see
 - As a user, I want to be able to select a card in my inventory and use it
-- As a user, I want the game world to be populated with monsters and generic objects 
+- As a user, I want the game world to be populated with monsters and generic objects
 
 Not Yet Integrated Into UI:
 - As a user, I want to be able to add coins to my inventory by picking up a coin pile in the world
 
+**Phase 2**
+- As a user, when I select quit, I get a prompt asking if I want to save my progress in this level or not
+- As a user, I want to be able to load an old game file and resume the game
 
 
 

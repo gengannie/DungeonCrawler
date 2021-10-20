@@ -19,6 +19,7 @@ public class GameWorld {
     protected boolean canAttack;
 
 
+    //TODO: import Pattern
     //EFFECTS: initialize world interface
     public GameWorld(int numOfMonsters) {
         this.numOfMonsters = numOfMonsters;
