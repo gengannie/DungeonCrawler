@@ -1,5 +1,6 @@
 package persistence;
 
+import model.Hero;
 import model.Rat;
 import model.SmallMonsters;
 import org.junit.jupiter.api.Test;
@@ -20,12 +21,12 @@ public class JsonReaderTest extends JsonTest {
             GameWorld testGame = reader.read();
             fail("IOException expected");
         } catch (IOException e) {
-            // pass
+            // expected
         }
     }
 
     // This method references code from this website
-// Link: https://stackoverflow.com/questions/15699953/how-do-i-parse-json-into-an-int
+    // Link: https://stackoverflow.com/questions/15699953/how-do-i-parse-json-into-an-int
     @Test
     void testReadingWorldGrid() {
         JsonReader reader = new JsonReader("./data/testReadingWorldGrid.json");
@@ -78,13 +79,25 @@ public class JsonReaderTest extends JsonTest {
                 SmallMonsters testRat = testMonsters.get(i);
                 rat = idealMonsters.get(i);
                 assertFalse(testRat == null);
-                assertEquals(testRat.getPosX(), rat.getPosX());
-                assertEquals(testRat.getPosY(), rat.getPosY());
-                assertEquals(testRat.getIfInSight(), rat.getIfInSight());
-                assertEquals(testRat.getHealth(), rat.getHealth());
-                assertEquals(testRat.getCanMove(), rat.getCanMove());
-                assertEquals(testRat.getIsDead(), rat.getIsDead());
+                checkEqualsRats(rat, testRat);
             }
+        } catch (IOException e) {
+            fail("Couldn't read from file");
+        }
+    }
+
+    @Test
+    void testReadingHero() {
+        JsonReader reader = new JsonReader("./data/testReadingWorldGrid.json");
+        try {
+            GameWorld testGame = reader.read();
+            Hero idealHero = new Hero(1, "a");
+            idealHero.moveHero(10,11);
+            idealHero.setHealthAndMana(10, 3);
+            Hero testHero = testGame.getHero();
+            assertFalse(testHero == null);
+            checkEqualsHero(testHero, idealHero);
+
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

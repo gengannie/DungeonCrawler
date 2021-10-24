@@ -1,4 +1,17 @@
 {
+  "Mana": 3,
+  "Move": 1,
+  "Hero Health": 10,
+  "PosX": 10,
+  "PosY": 11,
+  "Cards": [
+    "Healing Potion",
+    "heals your hero by 7 points",
+    "Freeze",
+    "Freezes a random opponent in sight"
+  ],
+  "Name": "a",
+  "Hero isDead": false,
   "monsters": [
     {
       "posX": 1,

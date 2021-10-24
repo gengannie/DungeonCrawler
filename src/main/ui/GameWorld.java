@@ -44,6 +44,11 @@ public class GameWorld implements Write {
         this.hero = h;
     }
 
+    //EFFECTS: returns hero for saving/ testing purposes
+    public Hero getHero() {
+        return hero;
+    }
+
     //MODIFIES: this
     //EFFECTS: replaces this world grid with a new one for saving purposes
     public void loadWorldGrid(int[][] arr) {
@@ -62,7 +67,7 @@ public class GameWorld implements Write {
     }
 
     //EFFECTS: returns this new monsters arraylist for saving purposes
-    public ArrayList<SmallMonsters>  getMonsters() {
+    public ArrayList<SmallMonsters> getMonsters() {
         return allMonsters;
     }
 
@@ -226,7 +231,9 @@ public class GameWorld implements Write {
         json.put("Mana", hero.getManaBar());
         json.put("Cards", hero.getCardDes());
         json.put("Move", hero.getMoveSquares());
-        json.put("Attack", hero.getHitPoints());
+        json.put("PosX", hero.getPosX());
+        json.put("PosY", hero.getPosY());
+        json.put("Hero isDead", hero.getIsDead());
         return json;
     }
 

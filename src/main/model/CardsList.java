@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 // Represents the list of cards the Hero can interact with
 public class CardsList {
@@ -13,6 +12,10 @@ public class CardsList {
         listOfCard.add(new HealingPotion());
         listOfCard.add(new StunCard());
 
+    }
+
+    public void resetInventory() {
+        listOfCard = new ArrayList<>();
     }
 
     //EFFECTS: print individual card name and descriptions
@@ -33,9 +36,15 @@ public class CardsList {
 
     //MODIFIES: this
     //EFFECTS: updates listOfCard so that it contains a new card. TODO: in the future make this process random
-    public void getNewRandomCard() {
+    public void getNewStunCard() {
         Cards newCard = new StunCard();
         listOfCard.add(newCard);
+    }
 
+    //MODIFIES: this
+    //EFFECTS: updates listOfCard so that it contains a new card. TODO: in the future make this process random
+    public void getNewHealingPot() {
+        Cards newCard = new HealingPotion();
+        listOfCard.add(newCard);
     }
 }

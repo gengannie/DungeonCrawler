@@ -40,10 +40,17 @@ public class Hero {
         manaBar += points;
         if (manaBar >= FULL_MANA) {
             manaBar -= FULL_MANA;
-            cardInventory.getNewRandomCard();
+            cardInventory.getNewStunCard();
         }
         return manaBar;
 
+    }
+
+    // MODIFIES: this
+    //EFFECTS: sets health and mana to desired number for saving purposes
+    public void setHealthAndMana(int health, int mana) {
+        this.health = health;
+        this.manaBar = mana;
     }
 
     // EFFECTS: returns current experience (mana) bar value
@@ -79,6 +86,16 @@ public class Hero {
         return isDead;
     }
 
+    //MODIFIES: this
+    //EFFECTS: if health <= 0, set isDead to true
+    public void setIsDead() {
+        if (health <= 0) {
+            isDead = true;
+        } else {
+            isDead = false;
+        }
+    }
+
     //EFFECTS: returns max number of turns
     public int getMaxTurns() {
         return NUM_OF_TURNS;
@@ -92,7 +109,7 @@ public class Hero {
     //MODIFIES: this
     //EFFECTS: changes hero's x and y position, but x and y cannot be negative
     public void moveHero(int x, int y) {
-        if (x > moveSquares) { //TODO: add test for this
+        if (x > moveSquares) {
             x = moveSquares;
         }
         if (y > moveSquares) {
@@ -153,4 +170,23 @@ public class Hero {
     public String getName() {
         return myName.substring(0, 1);
     }
+
+    //MODIFIES: this
+    //EFFECTS: adds new stun card to inventory for saving purposes
+    public void getStunCard() {
+        cardInventory.getNewStunCard();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds new healing potion to inventory for saving purposes
+    public void getHealingPot() {
+        cardInventory.getNewHealingPot();
+    }
+
+    //MODIFIES: this
+    //EFFECTS: sets cardinventory to be empty
+    public void resetCardInventory() {
+        cardInventory.resetInventory();
+    }
+
 }

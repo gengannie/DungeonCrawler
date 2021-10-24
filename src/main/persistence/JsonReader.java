@@ -1,5 +1,6 @@
 package persistence;
 
+import model.Hero;
 import model.Rat;
 import model.SmallMonsters;
 import org.json.JSONArray;
@@ -33,6 +34,7 @@ public class JsonReader {
         JSONObject jsonObject = new JSONObject(jsonData);
         newGame.loadWorldGrid(parseWorldGrid(jsonObject));
         newGame.loadMonsters(parseMonsters(jsonObject));
+        newGame.addHeroToGame(parseHero(jsonObject));
         return newGame;
     }
 
@@ -45,6 +47,38 @@ public class JsonReader {
         }
 
         return contentBuilder.toString();
+    }
+
+    //EFFECTS: creates and returns a new hero based on attributes in json file
+    private Hero parseHero(JSONObject jsonObject) {
+        int canMove = jsonObject.getInt("Move");
+        String name = jsonObject.getString("Name");
+        int health = jsonObject.getInt("Hero Health");
+        int mana = jsonObject.getInt("Mana");
+        int posX = jsonObject.getInt("PosX");
+        int posY = jsonObject.getInt("PosY");
+        Hero loadHero = new Hero(canMove, name);
+        loadHero.resetCardInventory();
+        addCardsToInventory(loadHero, jsonObject);
+        loadHero.setHealthAndMana(health, mana);
+        loadHero.moveHero(posX, posY);
+        loadHero.setIsDead();
+        return loadHero;
+    }
+
+    //MODIFIES: loadHero
+    //EFFECTS: parses card list and adds it to Hero's inventory
+    private void addCardsToInventory(Hero loadHero, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("Cards");
+        for (int i = 0; i < jsonArray.length(); i++) {
+            String nameOfCard = jsonArray.getString(i);
+            if (nameOfCard.equals("Healing Potion")) {
+                loadHero.getHealingPot();
+            } else if (nameOfCard.equals("Freeze")) {
+                loadHero.getStunCard();
+
+            }
+        }
     }
 
     // EFFECTS: parses ArrayList of Monsters from JSON object and returns it
