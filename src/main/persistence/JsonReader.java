@@ -18,6 +18,8 @@ import static javax.swing.UIManager.getInt;
 
 // This class references code from this CPSC 210/JsonSerializationDemo
 // Link: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+// JsonReader class for parsing json files
 public class JsonReader {
     private String sourceFile;
 
@@ -76,7 +78,6 @@ public class JsonReader {
                 loadHero.getHealingPot();
             } else if (nameOfCard.equals("Freeze")) {
                 loadHero.getStunCard();
-
             }
         }
     }

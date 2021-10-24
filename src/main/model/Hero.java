@@ -161,8 +161,12 @@ public class Hero {
     //EFFECTS: modifies hero attributes according to behavior of card
     public void useCard(int indexInList, ArrayList<SmallMonsters> allMonsters) {
         Cards returnedCard = cardInventory.getCardByIndex(indexInList);
-        returnedCard.performOnHero(this);
-        returnedCard.performOnMonsters(this, allMonsters);
+        if (returnedCard.getNameOfCard().equals("Healing Potion")) {
+            returnedCard.performOnHero(this);
+        } else {
+            returnedCard.performOnMonsters(this, allMonsters);
+        }
+
 
     }
 

@@ -77,6 +77,7 @@ class HeroTest {
         aHero.resetCardInventory();
         ArrayList<String> expected = new ArrayList<>();
         assertEquals(aHero.getCardDes(), expected);
+
         aHero.getStunCard();
         Cards stunCard = new StunCard();
         expected.add(stunCard.getNameOfCard());
@@ -186,6 +187,18 @@ class HeroTest {
         aHero.getAttacked(10);
         aHero.useCard(0, new ArrayList<>() );
         assertEquals(aHero.getCurrentHealth(), 7);
+    }
+
+    @Test
+    void useCardStun() {
+        ArrayList<SmallMonsters> smallMonsters = new ArrayList<>();
+        SmallMonsters rat = new Rat(1,1);
+        assertEquals(rat.getHealth(), 2);
+        rat.changeThisSight();
+        smallMonsters.add(rat);
+
+        aHero.useCard(1, smallMonsters);
+        assertEquals(rat.getHealth(), 1);
     }
 
 }

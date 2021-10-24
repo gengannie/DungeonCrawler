@@ -1,95 +1,18 @@
 package ui;
 
-import model.Hero;
-import persistence.JsonReader;
-
-import java.io.IOException;
-import java.util.Scanner;
-
+import java.io.FileNotFoundException;
 
 // Runnable file: where you start interacting with console interface
 // Initializes game world and iterates until game is over
 
 public class ConsoleInterface {
-    private static JsonReader jsonReader;
-    private static final String JSON_STORE = "./data/gameworld.json";
-    private static GameWorld gameOne;
-
-    //MODIFIES: this
-    //EFFECTS: sets up game as a new game
-    public static void setUp() {
-        gameOne = new LevelOne(250);
-    }
 
 
-    //MODIFIES: this
-    //EFFECTS: sets up game as a new game
-    public static void loadGame(GameWorld oldGame) {
-        gameOne = oldGame;
-    }
-
-    // MODIFIES: this, GameWorld
-    // EFFECTS: runs the program by initializing a hero and GameWorld
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        setUp();
-        gameOne.displayIntroMessage();
-        String nameOfHero = scanner.nextLine();
-        Hero mainCharacter = new Hero(1, nameOfHero);
-        gameOne.addHeroToGame(mainCharacter);
-        int maxTurns = mainCharacter.getMaxTurns();
-        int currentTurn = maxTurns;
-        while (true) {
-            while (currentTurn > 0) {
-                gameOne.displayCurrWorld(currentTurn);
-                String input = scanner.nextLine();
-                iterations(input, gameOne, mainCharacter);
-                currentTurn -= 1;
-            }
-            gameOne.updateDeaths();
-            gameOne.moveMonsters();
-            gameOne.displayCurrWorld(currentTurn);
-
-            currentTurn = maxTurns;
-        }
-    }
-
-
-    //REQUIRES: input to be valid string
-    //EFFECTS: iterates the various options the hero has until user terminates the game
-    public static void iterations(String input, GameWorld gameOne, Hero mainCharacter) {
-        Scanner scanner = new Scanner(System.in);
-        if (input.equals("QUIT")) {
-            System.exit(0);
-        } else if (input.equals("1")) {
-            gameOne.displayCardInfo();
-            System.out.println("Which card do you want to use? Input the number associated with it");
-            String whichCard = scanner.nextLine();
-            int indexOfCard = Integer.parseInt(whichCard) - 1;
-            gameOne.processCardBehavior(indexOfCard);
-            gameOne.displayHeroStats();
-        } else if (input.equals("2")) {
-            mainCharacter.moveHero(1, 1);
-        } else if (input.equals("4")) {
-            gameOne.attackMonsters();
-        } else if (input.equals("5")) {
-            gameOne.saveGameWorld();
-        } else if (input.equals("6")) {
-            loadGameWorld();
-
-        }
-
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads workroom from file
-    public static void loadGameWorld() {
         try {
-            jsonReader = new JsonReader(JSON_STORE);
-            loadGame(jsonReader.read());
-            System.out.println("Loaded " + "recent game" + " from " + JSON_STORE);
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
+            new GameWorldApp();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to run application: file not found");
         }
     }
 

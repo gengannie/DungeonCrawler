@@ -12,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 // This class references code from this CPSC210/JsonSerializationDemo
 // Link: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+// tests for JsonWriter class in persistence package
 class JsonWriterTest extends JsonTest {
     //NOTE TO CPSC 210 STUDENTS: the strategy in designing tests for the JsonWriter is to
     //write data to a file and then use the reader to read it back in and check that we
@@ -48,6 +50,26 @@ class JsonWriterTest extends JsonTest {
             checkEqualsHero(loadedGame.getHero(), testHero);
             assertEquals(loadedGame.getMonsters().size(), 0);
             assertEquals(loadedGame.getMonsters(), gameWorld.getMonsters());
+            checkEqualWorldGrid(loadedGame.returnWorldGrid(), gameWorld.returnWorldGrid());
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
+    @Test
+    void testUsualWorldGrid() {
+        try {
+            Hero testHero = new Hero(7,"test");
+            gameWorld = new GameWorld(10);
+            gameWorld.addHeroToGame(testHero);
+            JsonWriter writer = new JsonWriter("./data/testUsualWorldGrid.json");
+            writer.open();
+            writer.write(gameWorld);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/testUsualWorldGrid.json");
+            GameWorld loadedGame = reader.read();
+            checkEqualsHero(loadedGame.getHero(), testHero);
+            checkEqualsListOfMonsters(loadedGame.getMonsters(), gameWorld.getMonsters());
             checkEqualWorldGrid(loadedGame.returnWorldGrid(), gameWorld.returnWorldGrid());
         } catch (IOException e) {
             fail("Exception should not have been thrown");

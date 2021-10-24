@@ -21,11 +21,9 @@ public class GameWorld implements Write {
     protected ArrayList<SmallMonsters> allMonsters;
     protected boolean canAttack;
     private JsonWriter jsonWriter;
-
     private Hero hero;
 
 
-    //TODO: import Pattern
     //EFFECTS: initialize world interface
     public GameWorld(int numOfMonsters) {
         this.numOfMonsters = numOfMonsters;
@@ -34,7 +32,6 @@ public class GameWorld implements Write {
         placeMonstersInWorld(numOfMonsters);
         canAttack = false;
         jsonWriter = new JsonWriter(JSON_STORE);
-
 
     }
 
@@ -117,7 +114,6 @@ public class GameWorld implements Write {
             }
             System.out.println();
         }
-        displayOptions(turns);
     }
 
 
@@ -128,10 +124,9 @@ public class GameWorld implements Write {
         System.out.println("You can choose one of the following per turn. Input the number associated with the action");
         System.out.println("1. Check and use cards");
         System.out.println("2. Move left, right, up, or down");
-        System.out.println("3. Interact with world objects");
-        System.out.println("4. Attack monsters!");
-        System.out.println("5. Save game");
-        System.out.println("6. Load game");
+        System.out.println("3. Attack monsters!");
+        System.out.println("4. Save game");
+        System.out.println("5. Load game");
         displayHeroStats();
 
     }
@@ -206,12 +201,15 @@ public class GameWorld implements Write {
     public void attackMonsters() {
         if (canAttack) {
             for (SmallMonsters sm : allMonsters) {
-                if (sm.getIfInSight() && sm.getIsDead() == false) {
+                if (sm.getIsDead() == true) {
+                    allMonsters.remove(sm);
+                    removeFromWorldGrid(sm);
+                } else if (sm.getIfInSight() && sm.getIsDead() == false) {
                     sm.getHit(hero.getHitPoints());
-                    System.out.println("You just hit this" + sm.getName());
+                    System.out.println("You just hit this " + sm.getName());
                     if (sm.getIsDead()) {
                         allMonsters.remove(sm);
-                        System.out.println(sm.getName() + "Just died!");
+                        System.out.println("A rat just died!");
                         removeFromWorldGrid(sm);
                     }
                     hero.updateManaBar(hero.getHitPoints());
@@ -221,6 +219,7 @@ public class GameWorld implements Write {
         }
     }
 
+    //EFFECTS: converts GameWorld data to json objects
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

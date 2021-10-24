@@ -13,6 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // This class references code from this CPSC210/JsonSerializationDemo
 // Link: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+
+// tests for JsonWriter class in persistence package
 public class JsonReaderTest extends JsonTest {
     @Test
     void testReaderNonExistentFile() {
