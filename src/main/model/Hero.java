@@ -5,7 +5,7 @@ import java.util.ArrayList;
 // Main character of this game
 public class Hero {
     private static final int NUM_OF_TURNS = 2;
-    public static final int VISIBLE = 3;
+    public static final int VISIBLE = 2;
     private static final int MAX_NUM_OF_CARDS = 10;
     private static final int FULL_MANA = 10;
     public static final int MAX_HEALTH = 10;

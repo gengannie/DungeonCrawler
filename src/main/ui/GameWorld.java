@@ -46,6 +46,10 @@ public class GameWorld implements Write {
         return hero;
     }
 
+    public void moveHero(int x, int y) {
+        hero.moveHero(x, y);
+    }
+
     //MODIFIES: this
     //EFFECTS: replaces this world grid with a new one for saving purposes
     public void loadWorldGrid(int[][] arr) {
@@ -93,11 +97,13 @@ public class GameWorld implements Write {
 
     // EFFECTS: displays the 2D array grid of the "world"
     public void displayCurrWorld(int turns) {
-        for (int i = hero.getPosX(); i < hero.VISIBLE + hero.getPosX(); i++) {
-            for (int j = hero.getPosY(); j < hero.VISIBLE + hero.getPosY(); j++) {
+        for (int i = hero.getPosX() - hero.VISIBLE; i <= hero.VISIBLE + hero.getPosX(); i++) {
+            for (int j = hero.getPosY() - hero.VISIBLE; j <= hero.VISIBLE + hero.getPosY(); j++) {
                 if (i == hero.getPosX() && j == hero.getPosY()) {
                     System.out.print(hero.getName());
-                } else if (worldGrid[i][j] == 1) {
+                } else if (!posInBounds(i,j)) {
+                    System.exit(0);
+                } else if ((i >= 0 && j >= 0) && worldGrid[i][j] == 1) {
                     for (SmallMonsters m : allMonsters) {
                         if (m.getPosX() == i && m.getPosY() == j) {
                             System.out.print(m.getName() + " " + m.getHealth());
@@ -116,6 +122,14 @@ public class GameWorld implements Write {
         }
     }
 
+    //EFFECTS: checks whether or not current field of view is in bounds or not
+    public boolean posInBounds(int i, int j) {
+        if (i >= SQUARE_DIM || j >= SQUARE_DIM) {
+            System.out.println("You've reached the end of the world :)");
+            return false;
+        }
+        return true;
+    }
 
     //EFFECTS: displays what the user can do, corresponding to a integer
     public void displayOptions(int turns) {

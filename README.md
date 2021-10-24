@@ -35,7 +35,7 @@ Not Yet Integrated Into UI:
 - As a user, I want to be able to add coins to my inventory by picking up a coin pile in the world
 
 **Phase 2**
-- As a user, when I select quit, I get a prompt asking if I want to save my progress in this level or not
+- As a user, when I am displayed my options in the game, I want to be able to save my game as a checkpoint
 - As a user, I want to be able to load an old game file and resume the game
 
 

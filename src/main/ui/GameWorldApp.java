@@ -14,6 +14,7 @@ public class GameWorldApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private Scanner scanner;
+    private Hero mainCharacter;
 
     // MODIFIES: this, GameWorld
     // EFFECTS: initializes GameWorld
@@ -31,7 +32,7 @@ public class GameWorldApp {
         scanner = new Scanner(System.in);
         gameOne.displayIntroMessage();
         String nameOfHero = scanner.nextLine();
-        Hero mainCharacter = new Hero(1, nameOfHero);
+        mainCharacter = new Hero(1, nameOfHero);
         gameOne.addHeroToGame(mainCharacter);
         int maxTurns = mainCharacter.getMaxTurns();
         int currentTurn = maxTurns;
@@ -40,8 +41,14 @@ public class GameWorldApp {
                 gameOne.displayCurrWorld(currentTurn);
                 gameOne.displayOptions(currentTurn);
                 String input = scanner.nextLine();
-                iterations(input, gameOne, mainCharacter);
-                currentTurn -= 1;
+                if (input.equals("4")) {
+                    gameOne.saveGameWorld();
+                } else if (input.equals("5")) {
+                    loadGameWorld();
+                } else {
+                    iterations(input, gameOne);
+                    currentTurn -= 1;
+                }
             }
             gameOne.updateDeaths();
             gameOne.moveMonsters();
@@ -70,7 +77,7 @@ public class GameWorldApp {
 
     //REQUIRES: input to be valid string
     //EFFECTS: iterates the various options the hero has until user terminates the game
-    public void iterations(String input, GameWorld gameOne, Hero mainCharacter) {
+    public void iterations(String input, GameWorld gameOne) {
         Scanner scanner = new Scanner(System.in);
         if (input.equals("QUIT")) {
             System.exit(0);
@@ -82,13 +89,9 @@ public class GameWorldApp {
             gameOne.processCardBehavior(indexOfCard);
             gameOne.displayHeroStats();
         } else if (input.equals("2")) {
-            mainCharacter.moveHero(1, 1);
+            gameOne.moveHero(1, 1);
         } else if (input.equals("3")) {
             gameOne.attackMonsters();
-        } else if (input.equals("4")) {
-            gameOne.saveGameWorld();
-        } else if (input.equals("5")) {
-            loadGameWorld();
         }
 
     }
