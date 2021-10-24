@@ -1,11 +1,13 @@
 package persistence;
 
+import model.Hero;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ui.GameWorld;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 // This class references code from this CPSC210/JsonSerializationDemo
@@ -18,7 +20,7 @@ class JsonWriterTest extends JsonTest {
 
     @BeforeEach
     void setUp() {
-        GameWorld gameWorld = new GameWorld(1);
+        gameWorld = new GameWorld(0);
     }
 
     @Test
@@ -29,6 +31,26 @@ class JsonWriterTest extends JsonTest {
             fail("IOException was expected");
         } catch (IOException e) {
             // pass
+        }
+    }
+    @Test
+    void testWriterEmptyWorldGrid() {
+        try {
+            Hero testHero = new Hero(1,"test");
+            gameWorld.addHeroToGame(testHero);
+            JsonWriter writer = new JsonWriter("./data/testWriterEmptyWorldGrid.json");
+            writer.open();
+            writer.write(gameWorld);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/testWriterEmptyWorldGrid.json");
+            GameWorld loadedGame = reader.read();
+            checkEqualsHero(loadedGame.getHero(), testHero);
+            assertEquals(loadedGame.getMonsters().size(), 0);
+            assertEquals(loadedGame.getMonsters(), gameWorld.getMonsters());
+            checkEqualWorldGrid(loadedGame.returnWorldGrid(), gameWorld.returnWorldGrid());
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
         }
     }
 }

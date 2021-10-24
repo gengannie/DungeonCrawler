@@ -28,6 +28,7 @@ public class SmallMonsters implements Monsters {
     public boolean getIfInSight() {
         return (inSightOfHero);
     }
+
     //MODIFIES: this
     //EFFECTS: changes if this monster is in sight of the  hero or not
 
@@ -100,12 +101,20 @@ public class SmallMonsters implements Monsters {
         return isDead;
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets this monster's isDead variable for saving purposes
     public void setIsDead(boolean dead) {
         this.isDead = dead;
     }
 
+    //REQUIRES: health to be of a reasonable health
+    //MODIFIES: this
+    //EFFECTS: sets this monster's health to a certain number for saving purposes
     public void setHealth(int health) {
         this.health = health;
+        if (health <= 0) {
+            isDead = true;
+        }
     }
 
 

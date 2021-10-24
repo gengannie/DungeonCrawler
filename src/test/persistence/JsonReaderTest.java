@@ -43,12 +43,7 @@ public class JsonReaderTest extends JsonTest {
                 }
             }
             int[][] newWorldGrid = testGame.returnWorldGrid();
-            assertEquals(newWorldGrid.length, newWorldGrid.length);
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    assertEquals(newWorldGrid[i][j], newWorldGrid[i][j]);
-                }
-            }
+            checkEqualWorldGrid(idealWorldGrid, newWorldGrid);
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

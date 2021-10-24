@@ -51,6 +51,37 @@ public class SmallMonsterTest {
     }
 
     @Test
+    void setIsDead(){
+        mons.setIsDead(true);
+        assertTrue(mons.getIsDead());
+    }
+
+    @Test
+    void setIsDeadMultTimes(){
+        mons.setIsDead(true);
+        assertTrue(mons.getIsDead());
+        mons.setIsDead(false);
+        assertFalse(mons.getIsDead());
+    }
+
+    @Test
+    void setHealth(){
+        mons.setHealth(3);
+        assertEquals(mons.getHealth(),3);
+        assertFalse(mons.getIsDead());
+    }
+
+    @Test
+    void setHealthMultTimes(){
+        mons.setHealth(5);
+        assertEquals(mons.getHealth(),5);
+        assertFalse(mons.getIsDead());
+        mons.setHealth(0);
+        assertEquals(mons.getHealth(),0);
+        assertTrue(mons.getIsDead());
+    }
+
+    @Test
 
     void testGetHit() {
         assertFalse(mons.getIfInSight());

@@ -23,4 +23,14 @@ public class JsonTest {
         // TODO: assertEquals(idealHero.getCardDes(), testHero.getCardDes());
         assertEquals(idealHero.getIsDead(), testHero.getIsDead());
     }
+
+    protected void checkEqualWorldGrid(int [][] idealWorldGrid, int [][] newWorldGrid) {
+        assertEquals(idealWorldGrid.length, newWorldGrid.length);
+        int len = idealWorldGrid.length;
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len; j++) {
+                assertEquals(idealWorldGrid[i][j], newWorldGrid[i][j]);
+            }
+        }
+    }
 }

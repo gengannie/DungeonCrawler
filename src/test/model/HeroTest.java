@@ -52,6 +52,51 @@ class HeroTest {
     }
 
     @Test
+    void testSetIsDeadNotDead() {
+        aHero.setIsDead();
+        assertFalse(aHero.getIsDead());
+    }
+
+    @Test
+    void testSetIsDeadWithChangedHealth() {
+        aHero.setHealthAndMana(0,0);
+        assertFalse(aHero.getIsDead());
+        aHero.setIsDead();
+        assertTrue(aHero.getIsDead());
+    }
+
+    @Test
+    void resetInventory() {
+        aHero.resetCardInventory();
+        ArrayList<String> expected = new ArrayList<>();
+        assertEquals(aHero.getCardDes(), expected);
+    }
+
+    @Test
+    void resetInventoryAndAddStunCard() {
+        aHero.resetCardInventory();
+        ArrayList<String> expected = new ArrayList<>();
+        assertEquals(aHero.getCardDes(), expected);
+        aHero.getStunCard();
+        Cards stunCard = new StunCard();
+        expected.add(stunCard.getNameOfCard());
+        expected.add(stunCard.getDescription());
+        assertEquals(aHero.getCardDes(), expected);
+    }
+
+    @Test
+    void resetInventoryAndAddHealing() {
+        aHero.resetCardInventory();
+        ArrayList<String> expected = new ArrayList<>();
+        assertEquals(aHero.getCardDes(), expected);
+        aHero.getHealingPot();
+        Cards healingPot = new HealingPotion();
+        expected.add(healingPot.getNameOfCard());
+        expected.add(healingPot.getDescription());
+        assertEquals(aHero.getCardDes(), expected);
+    }
+
+    @Test
     void testHealAtMaxHealth() {
         aHero.heal(5);
         assertTrue(aHero.getCurrentHealth() == aHero.MAX_HEALTH);

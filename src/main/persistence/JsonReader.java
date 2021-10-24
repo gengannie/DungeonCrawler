@@ -113,7 +113,7 @@ public class JsonReader {
 
         for (int i = 0; i < jsonArray.length(); i++) {
             for (int j = 0; j < jsonArray.length(); j++) {
-                newGrid[i][j] = getInt(jsonArray.getJSONArray(i).get(j));
+                newGrid[i][j] = jsonArray.getJSONArray(i).getInt(j);
             }
         }
         return newGrid;
