@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+// Class to run GameWorld, this class also contains methods for json to read/write
 public class GameWorldApp {
     private static final String JSON_STORE = "./data/gameworld.json";
     private GameWorld gameOne;
@@ -27,6 +28,7 @@ public class GameWorldApp {
         runGameWorld();
     }
 
+    // MODIFIES: this
     // EFFECTS: initializes GameWorld
     private void setUpWorld() {
         scanner = new Scanner(System.in);
