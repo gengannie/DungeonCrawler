@@ -3,33 +3,67 @@ package ui;
 import model.Hero;
 import model.Rat;
 import model.SmallMonsters;
+import org.json.JSONObject;
+import persistence.JsonWriter;
+import persistence.Write;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 
 // Represents the model and behavior of a console user-interface
 // lays out basic world construction
-public class GameWorld {
+public class GameWorld implements Write {
+    private static final String JSON_STORE = "./data/gameworld.json";
     protected static final int SQUARE_DIM = 20;
     protected int numOfMonsters;
-    protected int numOfChest;
-    protected int numOfFountain;
     protected int[][] worldGrid;
     protected ArrayList<SmallMonsters> allMonsters;
     protected boolean canAttack;
+    private JsonWriter jsonWriter;
+
+    private Hero hero;
 
 
     //TODO: import Pattern
     //EFFECTS: initialize world interface
     public GameWorld(int numOfMonsters) {
         this.numOfMonsters = numOfMonsters;
-        numOfChest = 2;
-        numOfFountain = 1;
         worldGrid = new int[SQUARE_DIM][SQUARE_DIM];
         allMonsters = new ArrayList<>();
         placeMonstersInWorld(numOfMonsters);
         canAttack = false;
+        jsonWriter = new JsonWriter(JSON_STORE);
 
+
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds hero to this game world for saving purposes
+    public void addHeroToGame(Hero h) {
+        this.hero = h;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: replaces this world grid with a new one for saving purposes
+    public void loadWorldGrid(int[][] arr) {
+        worldGrid = arr;
+    }
+
+    //EFFECTS: returns this world grid with a new one for saving purposes
+    public int[][] returnWorldGrid() {
+        return worldGrid;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: replaces this new monsters arraylist for saving purposes
+    public void loadMonsters(ArrayList<SmallMonsters> allMonsters) {
+        this.allMonsters = allMonsters;
+    }
+
+    //EFFECTS: returns this new monsters arraylist for saving purposes
+    public ArrayList<SmallMonsters>  getMonsters() {
+        return allMonsters;
     }
 
     //MODIFIES: this
@@ -37,7 +71,6 @@ public class GameWorld {
     public void placeMonstersInWorld(int numOfMonsters) {
         Random seed = new Random();
         for (int i = 0; i < numOfMonsters; i++) {
-            boolean identicalPos = true;
             while (true) {
                 int randX = (seed.nextInt(SQUARE_DIM));
                 int randY = (seed.nextInt(SQUARE_DIM));
@@ -49,7 +82,6 @@ public class GameWorld {
                 }
             }
         }
-
     }
 
     // EFFECTS: display initial message to user
@@ -58,11 +90,11 @@ public class GameWorld {
     }
 
     // EFFECTS: displays the 2D array grid of the "world"
-    public void displayCurrWorld(Hero h, int turns) {
-        for (int i = h.getPosX(); i < h.VISIBLE + h.getPosX(); i++) {
-            for (int j = h.getPosY(); j < h.VISIBLE + h.getPosY(); j++) {
-                if (i == h.getPosX() && j == h.getPosY()) {
-                    System.out.print(h.getName());
+    public void displayCurrWorld(int turns) {
+        for (int i = hero.getPosX(); i < hero.VISIBLE + hero.getPosX(); i++) {
+            for (int j = hero.getPosY(); j < hero.VISIBLE + hero.getPosY(); j++) {
+                if (i == hero.getPosX() && j == hero.getPosY()) {
+                    System.out.print(hero.getName());
                 } else if (worldGrid[i][j] == 1) {
                     for (SmallMonsters m : allMonsters) {
                         if (m.getPosX() == i && m.getPosY() == j) {
@@ -80,12 +112,12 @@ public class GameWorld {
             }
             System.out.println();
         }
-        displayOptions(h, turns);
+        displayOptions(turns);
     }
 
 
     //EFFECTS: displays what the user can do, corresponding to a integer
-    public void displayOptions(Hero h, int turns) {
+    public void displayOptions(int turns) {
         System.out.println("You have " + turns + " turns left before the monsters attack");
         System.out.println("Input QUIT to quit game");
         System.out.println("You can choose one of the following per turn. Input the number associated with the action");
@@ -93,13 +125,15 @@ public class GameWorld {
         System.out.println("2. Move left, right, up, or down");
         System.out.println("3. Interact with world objects");
         System.out.println("4. Attack monsters!");
-        displayHeroStats(h);
+        System.out.println("5. Save game");
+        System.out.println("6. Load game");
+        displayHeroStats();
 
     }
 
     //EFFECTS: displays the current card inventory of hero
-    public void displayCardInfo(Hero h) {
-        ArrayList<String> returnedCardList = h.getCardDes();
+    public void displayCardInfo() {
+        ArrayList<String> returnedCardList = hero.getCardDes();
         int currInd = 1;
         for (int i = 0; i < returnedCardList.size(); i += 2) {
             System.out.print(currInd + ": " + returnedCardList.get(i));
@@ -112,20 +146,20 @@ public class GameWorld {
 
     //MODIFIES: this
     //EFFECTS: updates monster position in world, monster moves, and hero health might decrease
-    public void moveMonsters(Hero h) {
+    public void moveMonsters() {
         for (SmallMonsters m : allMonsters) {
             if (m.getIfInSight() && m.getCanMove() == true) {
-                m.attack(h);
+                m.attack(hero);
             }
         }
 
     }
 
     //EFFECTS: show Hero's updated health, move, and action points
-    public void displayHeroStats(Hero h) {
-        System.out.println("Health: " + h.getCurrentHealth());
-        System.out.println("Attack: " + h.getHitPoints());
-        System.out.println("Movement: " + h.getMoveSquares());
+    public void displayHeroStats() {
+        System.out.println("Health: " + hero.getCurrentHealth());
+        System.out.println("Attack: " + hero.getHitPoints());
+        System.out.println("Movement: " + hero.getMoveSquares());
 
     }
 
@@ -137,14 +171,14 @@ public class GameWorld {
 
     //MODIFIES: Hero, SmallMonsters
     //EFFECTS: calls method in Cards class to perform card behavior on selected players
-    public void processCardBehavior(Hero h, int ind) {
-        h.useCard(ind, allMonsters);
+    public void processCardBehavior(int ind) {
+        hero.useCard(ind, allMonsters);
     }
 
     // MODIFIES: this, Hero
     // EFFECTS: remove Hero or monsters from the world if health is <= 0
-    public void updateDeaths(Hero h) {
-        if (h.getIsDead()) {
+    public void updateDeaths() {
+        if (hero.getIsDead()) {
             gameOver();
         }
     }
@@ -164,21 +198,49 @@ public class GameWorld {
 
     // MODIFIES: this
     // EFFECTS: Hero hits a random monster nearby that he can see
-    public void attackMonsters(Hero h) {
+    public void attackMonsters() {
         if (canAttack) {
             for (SmallMonsters sm : allMonsters) {
                 if (sm.getIfInSight() && sm.getIsDead() == false) {
-                    sm.getHit(h.getHitPoints());
+                    sm.getHit(hero.getHitPoints());
                     System.out.println("You just hit this" + sm.getName());
                     if (sm.getIsDead()) {
                         allMonsters.remove(sm);
                         System.out.println(sm.getName() + "Just died!");
                         removeFromWorldGrid(sm);
                     }
-                    h.updateManaBar(h.getHitPoints());
+                    hero.updateManaBar(hero.getHitPoints());
                     break;
                 }
             }
         }
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("worldGrid", worldGrid);
+        json.put("monsters", allMonsters);
+        json.put("Hero Health", hero.getCurrentHealth());
+        json.put("Name", hero.getName());
+        json.put("Mana", hero.getManaBar());
+        json.put("Cards", hero.getCardDes());
+        json.put("Move", hero.getMoveSquares());
+        json.put("Attack", hero.getHitPoints());
+        return json;
+    }
+
+    // EFFECTS: saves the workroom to file
+    public void saveGameWorld() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(this);
+            jsonWriter.close();
+            System.out.println("Saved your recent game to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+
 }

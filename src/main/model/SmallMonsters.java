@@ -100,5 +100,13 @@ public class SmallMonsters implements Monsters {
         return isDead;
     }
 
+    public void setIsDead(boolean dead) {
+        this.isDead = dead;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
 
 }

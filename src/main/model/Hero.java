@@ -17,7 +17,6 @@ public class Hero {
     private int manaBar;
     private int posX;
     private int posY;
-    private int coinsInInventory;
     private int hitPoints;
     private boolean isDead;
 
@@ -30,7 +29,6 @@ public class Hero {
         cardInventory = new CardsList();
         posX = 0;
         posY = 0;
-        coinsInInventory = 0;
         hitPoints = 3;
         isDead = false;
 
@@ -120,11 +118,6 @@ public class Hero {
         return posY;
     }
 
-    //EFFECTS: returns this hero's coins
-    public int getCoinsInInventory() {
-        return coinsInInventory;
-    }
-
     //EFFECTS: returns this hero's hitPoints
     public int getHitPoints() {
         return hitPoints;
@@ -138,12 +131,6 @@ public class Hero {
 
     public int getMoveSquares() {
         return moveSquares;
-    }
-
-    //MODIFIES: this
-    //EFFECTS: adds coinAmount to coins this hero has
-    public void addCoins(int coinAmount) {
-        coinsInInventory += coinAmount;
     }
 
     //EFFECTS: returns card description of cards in inventory

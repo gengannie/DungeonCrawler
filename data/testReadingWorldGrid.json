@@ -1,0 +1,48 @@
+{
+  "monsters": [
+    {
+      "posX": 1,
+      "canMove": false,
+      "posY": 10,
+      "ifInSight": false,
+      "name": "Rat",
+      "health": 2,
+      "isDead": false
+    },
+    {
+      "posX": 5,
+      "canMove": true,
+      "posY": 2,
+      "ifInSight": true,
+      "name": "Rat",
+      "health": 2,
+      "isDead": false
+    },
+    {
+      "posX": 10,
+      "canMove": true,
+      "posY": 1,
+      "ifInSight": false,
+      "name": "Rat",
+      "health": 0,
+      "isDead": true
+    }
+  ],
+  "worldGrid": [
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      0
+    ]
+  ]
+}

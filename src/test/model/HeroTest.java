@@ -36,11 +36,6 @@ class HeroTest {
         assertEquals(aHero.getCardDes().size() / 2, 3);
     }
 
-    @Test
-    void getCoins(){
-        aHero.addCoins(5);
-        assertEquals(aHero.getCoinsInInventory(), 5);
-    }
 
     @Test
     void changeMoveTest() {
