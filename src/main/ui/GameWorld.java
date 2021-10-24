@@ -101,7 +101,7 @@ public class GameWorld implements Write {
             for (int j = hero.getPosY() - hero.VISIBLE; j <= hero.VISIBLE + hero.getPosY(); j++) {
                 if (i == hero.getPosX() && j == hero.getPosY()) {
                     System.out.print(hero.getName());
-                } else if (!posInBounds(i,j)) {
+                } else if (!posInBounds(i, j)) {
                     System.exit(0);
                 } else if ((i >= 0 && j >= 0) && worldGrid[i][j] == 1) {
                     for (SmallMonsters m : allMonsters) {

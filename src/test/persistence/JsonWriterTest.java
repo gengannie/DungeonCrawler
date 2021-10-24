@@ -35,10 +35,11 @@ class JsonWriterTest extends JsonTest {
             // pass
         }
     }
+
     @Test
     void testWriterEmptyWorldGrid() {
         try {
-            Hero testHero = new Hero(1,"test");
+            Hero testHero = new Hero(1, "test");
             gameWorld.addHeroToGame(testHero);
             JsonWriter writer = new JsonWriter("./data/testWriterEmptyWorldGrid.json");
             writer.open();
@@ -55,10 +56,11 @@ class JsonWriterTest extends JsonTest {
             fail("Exception should not have been thrown");
         }
     }
+
     @Test
     void testUsualWorldGrid() {
         try {
-            Hero testHero = new Hero(7,"test");
+            Hero testHero = new Hero(7, "test");
             gameWorld = new GameWorld(10);
             gameWorld.addHeroToGame(testHero);
             JsonWriter writer = new JsonWriter("./data/testUsualWorldGrid.json");

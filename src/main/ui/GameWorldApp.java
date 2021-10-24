@@ -15,6 +15,7 @@ public class GameWorldApp {
     private JsonReader jsonReader;
     private Scanner scanner;
     private Hero mainCharacter;
+    private int maxTurns;
 
     // MODIFIES: this, GameWorld
     // EFFECTS: initializes GameWorld
@@ -26,15 +27,20 @@ public class GameWorldApp {
         runGameWorld();
     }
 
-    // MODIFIES: this
-    // EFFECTS: processes user input
-    private void runGameWorld() {
+    // EFFECTS: initializes GameWorld
+    private void setUpWorld() {
         scanner = new Scanner(System.in);
         gameOne.displayIntroMessage();
         String nameOfHero = scanner.nextLine();
         mainCharacter = new Hero(1, nameOfHero);
         gameOne.addHeroToGame(mainCharacter);
-        int maxTurns = mainCharacter.getMaxTurns();
+        maxTurns = mainCharacter.getMaxTurns();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: processes user input
+    private void runGameWorld() {
+        setUpWorld();
         int currentTurn = maxTurns;
         while (true) {
             while (currentTurn > 0) {
@@ -52,7 +58,6 @@ public class GameWorldApp {
             }
             gameOne.updateDeaths();
             gameOne.moveMonsters();
-
             currentTurn = maxTurns;
         }
     }
