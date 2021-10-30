@@ -10,6 +10,8 @@ public class Hero {
     private static final int FULL_MANA = 10;
     public static final int MAX_HEALTH = 10;
 
+    public static final int SIZE_X = 15;
+    public static final int SIZE_Y = 8;
     private String myName;
     private int moveSquares;
     private CardsList cardInventory;
@@ -158,7 +160,7 @@ public class Hero {
 
     //REQUIRES: cardInventory to be not empty
     //MODIFIES: this
-    //EFFECTS: modifies hero attributes according to behavior of card
+    //EFFECTS: modifies hero attributes according to behavior of card, removes card from inventory
     public void useCard(int indexInList, ArrayList<SmallMonsters> allMonsters) {
         Cards returnedCard = cardInventory.getCardByIndex(indexInList);
         if (returnedCard.getNameOfCard().equals("Healing Potion")) {
@@ -166,6 +168,7 @@ public class Hero {
         } else {
             returnedCard.performOnMonsters(this, allMonsters);
         }
+        cardInventory.removeCard(indexInList);
 
 
     }
@@ -193,4 +196,8 @@ public class Hero {
         cardInventory.resetInventory();
     }
 
+    //EFFECTS: returns how many cards are in hero's inventory
+    public int getCardInventoryLength() {
+        return cardInventory.getSize();
+    }
 }

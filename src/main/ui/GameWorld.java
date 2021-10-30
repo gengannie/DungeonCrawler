@@ -4,6 +4,7 @@ import model.Hero;
 import model.Rat;
 import model.SmallMonsters;
 import org.json.JSONObject;
+import persistence.JsonReader;
 import persistence.JsonWriter;
 import persistence.Write;
 
@@ -15,23 +16,29 @@ import java.util.Random;
 // lays out basic world construction
 public class GameWorld implements Write {
     private static final String JSON_STORE = "./data/gameworld.json";
+    public static final int WIDTH = 1600;
+    public static final int HEIGHT = 1000;
     protected static final int SQUARE_DIM = 20;
     protected int numOfMonsters;
     protected int[][] worldGrid;
     protected ArrayList<SmallMonsters> allMonsters;
     protected boolean canAttack;
     private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     private Hero hero;
+    private boolean isGameOver;
 
 
     //EFFECTS: initialize world interface
     public GameWorld(int numOfMonsters) {
         this.numOfMonsters = numOfMonsters;
         worldGrid = new int[SQUARE_DIM][SQUARE_DIM];
+        jsonReader = new JsonReader(JSON_STORE);
         allMonsters = new ArrayList<>();
         placeMonstersInWorld(numOfMonsters);
         canAttack = false;
         jsonWriter = new JsonWriter(JSON_STORE);
+        isGameOver = false;
 
     }
 
@@ -90,9 +97,35 @@ public class GameWorld implements Write {
         }
     }
 
+    //EFFECTS: updates world by moving monsters and updating deaths
+    public void update() {
+        updateMonsterSight();
+        moveMonsters();
+        updateDeaths();
+    }
+
     // EFFECTS: display initial message to user
     public void displayIntroMessage() {
         System.out.println("Welcome to the game, please input your hero's name :)");
+    }
+
+    public void updateMonsterSight() {
+        for (int i = hero.getPosX() - hero.VISIBLE; i <= hero.VISIBLE + hero.getPosX(); i++) {
+            for (int j = hero.getPosY() - hero.VISIBLE; j <= hero.VISIBLE + hero.getPosY(); j++) {
+                if ((i >= 0 && j >= 0) && worldGrid[i][j] == 1) {
+                    for (SmallMonsters m : allMonsters) {
+                        if (m.getPosX() == i && m.getPosY() == j) {
+                            System.out.print(m.getName() + " " + m.getHealth());
+                            if (m.getIfInSight() == false) {
+                                m.changeThisSight();
+                            }
+                            canAttack = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // EFFECTS: displays the 2D array grid of the "world"
@@ -144,6 +177,16 @@ public class GameWorld implements Write {
         displayHeroStats();
 
     }
+
+    //EFFECTS: returns whether or not game is over
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
+    public void setGameOver() {
+        isGameOver = true;
+    }
+
 
     //EFFECTS: displays the current card inventory of hero
     public void displayCardInfo() {

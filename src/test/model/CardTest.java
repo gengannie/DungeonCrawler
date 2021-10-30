@@ -34,7 +34,6 @@ public class CardTest {
         c.performOnHero(aHero);
         assertEquals(aHero.getCurrentHealth(), beforeHealth);
 
-
     }
     @Test
     void performOnMonsters() {

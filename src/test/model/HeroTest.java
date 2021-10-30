@@ -184,13 +184,16 @@ class HeroTest {
 
     @Test
     void useCardHeal() {
+        int num = aHero.getCardInventoryLength();
         aHero.getAttacked(10);
         aHero.useCard(0, new ArrayList<>() );
         assertEquals(aHero.getCurrentHealth(), 7);
+        assertEquals(num - 1, aHero.getCardInventoryLength());
     }
 
     @Test
     void useCardStun() {
+        int num = aHero.getCardInventoryLength();
         ArrayList<SmallMonsters> smallMonsters = new ArrayList<>();
         SmallMonsters rat = new Rat(1,1);
         assertEquals(rat.getHealth(), 2);
@@ -199,6 +202,7 @@ class HeroTest {
 
         aHero.useCard(1, smallMonsters);
         assertEquals(rat.getHealth(), 1);
+        assertEquals(num - 1, aHero.getCardInventoryLength());
     }
 
 }

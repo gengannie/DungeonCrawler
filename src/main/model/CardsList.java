@@ -47,4 +47,17 @@ public class CardsList {
         Cards newCard = new HealingPotion();
         listOfCard.add(newCard);
     }
+
+    //MODIFIES: this
+    //EFFECTS: removes card from inventory specified by valid index
+    public void removeCard(int ind) {
+        if (ind >= 0 && ind < listOfCard.size()) {
+            listOfCard.remove(ind);
+        }
+    }
+
+    //EFFECTS: returns how many cards are in card inventory
+    public int getSize() {
+        return listOfCard.size();
+    }
 }

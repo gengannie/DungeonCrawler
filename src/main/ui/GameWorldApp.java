@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-// Class to run GameWorld, this class also contains methods for json to read/write
+// Class to run GameWorld on console, this class also contains methods for json to read/write
 public class GameWorldApp {
     private static final String JSON_STORE = "./data/gameworld.json";
     private GameWorld gameOne;
@@ -25,7 +25,6 @@ public class GameWorldApp {
         gameOne = new GameWorld(250);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        runGameWorld();
     }
 
     // MODIFIES: this
@@ -37,6 +36,7 @@ public class GameWorldApp {
         mainCharacter = new Hero(1, nameOfHero);
         gameOne.addHeroToGame(mainCharacter);
         maxTurns = mainCharacter.getMaxTurns();
+        runGameWorld();
     }
 
     // MODIFIES: this
