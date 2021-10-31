@@ -24,6 +24,11 @@ public class HeroStatsPanel extends JPanel {
         gameWorld = world;
         setBackground(new Color(124, 130, 199));
         this.hero = gameWorld.getHero();
+        construct();
+
+    }
+
+    private void construct() {
         heroHealthLbl = new JLabel(HEALTH_TXT + hero.getCurrentHealth());
         heroHealthLbl.setFont(new Font("Calibri", Font.BOLD, 50));
         heroManaLbl = new JLabel(MANA_TXT + hero.getManaBar());
@@ -42,9 +47,7 @@ public class HeroStatsPanel extends JPanel {
     // effects:  updates number of invaders shot and number of missiles
     //           remaining to reflect current state of game
     public void update() {
-        heroHealthLbl = new JLabel(HEALTH_TXT + hero.getCurrentHealth());
-        heroManaLbl.setPreferredSize(new Dimension(LBL_WIDTH, LBL_HEIGHT));
-        heroAttackLbl.setPreferredSize(new Dimension(LBL_WIDTH, LBL_HEIGHT));
+        construct();
         repaint();
     }
 }

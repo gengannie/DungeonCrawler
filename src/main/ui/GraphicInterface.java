@@ -2,25 +2,21 @@ package ui;
 
 import model.Hero;
 import persistence.JsonReader;
-import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class GraphicInterface extends JFrame {
     private static final String JSON_STORE = "./data/gameworld.json";
-    private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private GameWorld gameWorld;
     private GameWorldPanel gamePanel;
     private HeroStatsPanel heroStats;
-    private Scanner scanner;
     private Hero mainCharacter;
-    private int maxTurns;
+    private final int maxTurns;
     private int currentTurn;
 
 
@@ -28,7 +24,6 @@ public class GraphicInterface extends JFrame {
     // effects: sets up window in which Space Invaders game will be played
     public GraphicInterface(String nameOfHero) throws IOException {
         super("Dungeon Crawler: Too Many Rats Edition");
-        jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         gameWorld = new GameWorld(250);
         gameWorld.addHeroToGame(new Hero(3, nameOfHero));
@@ -55,8 +50,10 @@ public class GraphicInterface extends JFrame {
 
     //MODIFIES: this
     //EFFECTS: sets up game as a new game
-    public void loadGame(GameWorld oldGame) {
+    public void loadGame(GameWorld oldGame) throws IOException {
         gameWorld = oldGame;
+        gamePanel = new GameWorldPanel(gameWorld);
+        heroStats = new HeroStatsPanel(gameWorld);
     }
 
     // MODIFIES: this
@@ -84,10 +81,15 @@ public class GraphicInterface extends JFrame {
         currentTurn -= 1;
         if (currentTurn == 0) {
             currentTurn = maxTurns;
+            gameWorld.moveMonsters();
+            gameWorld.update();
+
+            heroStats.removeAll();
+            heroStats.revalidate();
+            heroStats.update();
+            gamePanel.repaint();
         }
-        gameWorld.update();
-        gamePanel.repaint();
-        heroStats.update();
+
     }
 
     // Responds to key press codes
@@ -95,6 +97,7 @@ public class GraphicInterface extends JFrame {
     // EFFECTS: //TODO
     // https://www.programcreek.com/java-api-examples/?class=java.awt.event.KeyEvent&method=VK_R
     public void processCommand(int keyCode) {
+        updateWorld();
         switch (keyCode) {
             case (KeyEvent.VK_1):
                 //display cards
@@ -107,11 +110,23 @@ public class GraphicInterface extends JFrame {
                 //attack monsters
                 gameWorld.attackMonsters();
                 break;
+        }
+        checkIfSaveOrLoad(keyCode);
+
+        gameWorld.update();
+        heroStats.removeAll();
+        heroStats.revalidate();
+        heroStats.update();
+        gamePanel.repaint();
+
+    }
+
+    private void checkIfSaveOrLoad(int keyCode) {
+        switch (keyCode) {
             case (KeyEvent.VK_S):
                 gameWorld.saveGameWorld();
                 break;
             case (KeyEvent.VK_L):
-                //load game
                 loadGameWorld();
                 break;
             case (KeyEvent.VK_Q):
@@ -119,7 +134,7 @@ public class GraphicInterface extends JFrame {
                 gameWorld.setGameOver();
                 break;
         }
-        updateWorld();
+
     }
 
     // Centres frame on desktop

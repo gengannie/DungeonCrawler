@@ -100,7 +100,6 @@ public class GameWorld implements Write {
     //EFFECTS: updates world by moving monsters and updating deaths
     public void update() {
         updateMonsterSight();
-        moveMonsters();
         updateDeaths();
     }
 
@@ -115,7 +114,6 @@ public class GameWorld implements Write {
                 if ((i >= 0 && j >= 0) && worldGrid[i][j] == 1) {
                     for (SmallMonsters m : allMonsters) {
                         if (m.getPosX() == i && m.getPosY() == j) {
-                            System.out.print(m.getName() + " " + m.getHealth());
                             if (m.getIfInSight() == false) {
                                 m.changeThisSight();
                             }
@@ -205,8 +203,9 @@ public class GameWorld implements Write {
     //EFFECTS: updates monster position in world, monster moves, and hero health might decrease
     public void moveMonsters() {
         for (SmallMonsters m : allMonsters) {
-            if (m.getIfInSight() && m.getCanMove() == true) {
+            if (m.getIfInSight() && m.getCanMove() == true && !m.getIsDead()) {
                 m.attack(hero);
+                System.out.println(hero.getCurrentHealth());
             }
         }
 

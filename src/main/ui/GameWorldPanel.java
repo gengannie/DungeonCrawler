@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import java.lang.*;
 
 public class GameWorldPanel extends JComponent {
     private static final String JSON_STORE = "./data/gameworld.json";
@@ -63,8 +62,9 @@ public class GameWorldPanel extends JComponent {
     // modifies: g
     // effects:  draws the game onto g
     private void drawGame(Graphics g) throws IOException {
-        drawMonsters(g);
         drawHero(g);
+        drawMonsters(g);
+
     }
 
 
@@ -100,7 +100,9 @@ public class GameWorldPanel extends JComponent {
     private void drawInvader(Graphics g, SmallMonsters sm) throws IOException {
         Color savedCol = g.getColor();
 
-        g.drawImage(image, calculatePosX(sm.getPosX()), calculatePosY(sm.getPosY()), null);
+        g.setColor(new Color(159, 111, 194));
+        g.fillOval(calculatePosX(sm.getPosX()), calculatePosY(sm.getPosY()), WORLD_BLOCK, WORLD_BLOCK);
+        //g.drawImage(image, calculatePosX(sm.getPosX()), calculatePosY(sm.getPosY()), null);
         g.setColor(savedCol);
     }
 
@@ -108,10 +110,9 @@ public class GameWorldPanel extends JComponent {
     // modifies: g
     // effects:  draws the tank onto g
     private void drawHero(Graphics g) {
-
         Color savedCol = g.getColor();
         g.setColor(new Color(210, 29, 29));
-        g.fillRect(heroPosX * WORLD_BLOCK, heroPosY * WORLD_BLOCK, WORLD_BLOCK, WORLD_BLOCK);
+        g.fillRect(heroPosX, heroPosY, WORLD_BLOCK, WORLD_BLOCK);
         g.setColor(savedCol);
     }
 

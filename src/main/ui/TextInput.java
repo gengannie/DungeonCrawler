@@ -29,6 +29,7 @@ public class TextInput extends JFrame implements ActionListener {
         add(contentPanel);
         setSize(400, 400);
         pack();
+        centreOnScreen();
         setVisible(true);
     }
 
@@ -37,21 +38,26 @@ public class TextInput extends JFrame implements ActionListener {
 
     }
 
-    public String getName(String name) {
-        return name;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
         if (s.equals("Done!")) {
             // set the text of the label to the text of the field
             name = inputField.getText();
+            setVisible(false);
             try {
                 new GraphicInterface(name);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
         }
+    }
+
+    // Centres frame on desktop
+    // modifies: this
+    // effects:  location of frame is set so frame is centred on desktop
+    private void centreOnScreen() {
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2);
     }
 }
