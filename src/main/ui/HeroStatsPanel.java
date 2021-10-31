@@ -5,6 +5,7 @@ import model.Hero;
 import javax.swing.*;
 import java.awt.*;
 
+// JPanel to display hero statistics (health, attack points, and so on as separate JLabel objects)
 public class HeroStatsPanel extends JPanel {
     private GameWorld gameWorld;
     private static final String FONT_USED = Font.DIALOG_INPUT;
@@ -29,6 +30,8 @@ public class HeroStatsPanel extends JPanel {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: reconstructs the JLabel objects according to corresponding values
     private void construct() {
         heroHealthLbl = new JLabel(HEALTH_TXT + hero.getCurrentHealth());
         heroHealthLbl.setFont(new Font(FONT_USED, Font.BOLD, 50));
@@ -43,10 +46,9 @@ public class HeroStatsPanel extends JPanel {
         add(heroAttackLbl);
     }
 
-    // Updates the score panel
-    // modifies: this
-    // effects:  updates number of invaders shot and number of missiles
-    //           remaining to reflect current state of game
+    // Updates the stats panel
+    // MODIFIES: this
+    // EFFECTS: reconstructs the world and then replaces them onto visual surface
     public void update() {
         construct();
         repaint();

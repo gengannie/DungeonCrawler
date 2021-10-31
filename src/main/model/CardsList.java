@@ -48,12 +48,11 @@ public class CardsList {
         listOfCard.add(newCard);
     }
 
+    //REQUIRES: ind to be a valid index
     //MODIFIES: this
     //EFFECTS: removes card from inventory specified by valid index
     public void removeCard(int ind) {
-        if (ind >= 0 && ind < listOfCard.size()) {
-            listOfCard.remove(ind);
-        }
+        listOfCard.remove(ind);
     }
 
     //EFFECTS: returns how many cards are in card inventory

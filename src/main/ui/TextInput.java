@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+// start point of the game, where users get a TextField to enter their name
+// generates new GraphicInterface when name is successfully entered
 public class TextInput extends JFrame implements ActionListener {
     private final JTextField inputField;
     private static final String ENTER_NAME = "Please enter your hero's name: ";
@@ -18,6 +20,8 @@ public class TextInput extends JFrame implements ActionListener {
         setUndecorated(false);
 
         JButton submit = new JButton("Done!");
+        submit.setPreferredSize(new Dimension(100,50));
+        submit.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
         submit.addActionListener(this);
 
         label = new JLabel(ENTER_NAME);

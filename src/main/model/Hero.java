@@ -162,15 +162,15 @@ public class Hero {
     //MODIFIES: this
     //EFFECTS: modifies hero attributes according to behavior of card, removes card from inventory
     public void useCard(int indexInList, ArrayList<SmallMonsters> allMonsters) {
-        Cards returnedCard = cardInventory.getCardByIndex(indexInList);
-        if (returnedCard.getNameOfCard().equals("Healing Potion")) {
-            returnedCard.performOnHero(this);
-        } else {
-            returnedCard.performOnMonsters(this, allMonsters);
+        if (indexInList >= 0 && indexInList < cardInventory.getSize()) {
+            Cards returnedCard = cardInventory.getCardByIndex(indexInList);
+            if (returnedCard.getNameOfCard().equals("Healing Potion")) {
+                returnedCard.performOnHero(this);
+            } else {
+                returnedCard.performOnMonsters(this, allMonsters);
+            }
+            cardInventory.removeCard(indexInList);
         }
-        cardInventory.removeCard(indexInList);
-
-
     }
 
     //EFFECTS: returns the initial of Hero's name

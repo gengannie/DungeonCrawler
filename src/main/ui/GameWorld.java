@@ -219,12 +219,6 @@ public class GameWorld implements Write {
 
     }
 
-    //EFFECTS: returns whether or not there are monsters to attack
-    public boolean canAttackMonsters() {
-        return canAttack;
-
-    }
-
     //MODIFIES: Hero, SmallMonsters
     //EFFECTS: calls method in Cards class to perform card behavior on selected players
     public void processCardBehavior(int ind) {

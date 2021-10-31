@@ -14,6 +14,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
+// This class references code from CPSC210/B02-SpaceInvadersBase
+// Link: https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
+
+// JComponent class that "paints" world objects
 public class GameWorldPanel extends JComponent {
     private static final String JSON_STORE = "./data/gameworld.json";
     private static final int LIMIT = 2;
@@ -76,11 +81,13 @@ public class GameWorldPanel extends JComponent {
     private void drawMonsters(Graphics g) throws IOException {
         for (SmallMonsters next : gameOne.getMonsters()) {
             if (next.getIfInSight()) {
-                drawInvader(g, next);
+                drawMonster(g, next);
             }
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: increments position in card slider
     public void incrementPos() {
         posInList += 1;
         if (posInList >= gameOne.getHero().getCardDes().size() - 1) {
@@ -88,6 +95,8 @@ public class GameWorldPanel extends JComponent {
         }
     }
 
+    //MODIFIES: g
+    //EFFECTS: draws the arraylist of string description (corresponding to card list) onto the world
     private void drawCards(Graphics g) {
         ArrayList<String> cardDes = gameOne.getHero().getCardDes();
         int count = 1;
@@ -95,11 +104,12 @@ public class GameWorldPanel extends JComponent {
             for (int i = posInList; i < cardDes.size(); i += 2) {
                 drawCard(cardDes.get(i), cardDes.get(i + 1), g, count);
                 count += 1;
-
             }
         }
     }
 
+    //MODIFIES: g
+    //EFFECTS: draws each individual card onto the world coponent
     private void drawCard(String name, String des, Graphics g, int index) {
         Color savedCol = g.getColor();
 
@@ -131,10 +141,9 @@ public class GameWorldPanel extends JComponent {
         return (x * WORLD_BLOCK) + heroPosY;
     }
 
-    // Draw an invader
-    // modifies: g
-    // effects:  draws the invader i onto g
-    private void drawInvader(Graphics g, SmallMonsters sm) throws IOException {
+    // MODIFIES: g
+    // EFFECTS:  draws the SmallMonster sm onto g
+    private void drawMonster(Graphics g, SmallMonsters sm) throws IOException {
         Color savedCol = g.getColor();
 
         g.setColor(new Color(159, 111, 194));
@@ -143,9 +152,8 @@ public class GameWorldPanel extends JComponent {
         g.setColor(savedCol);
     }
 
-    // Draw the tank
-    // modifies: g
-    // effects:  draws the tank onto g
+    // MODIFIES: g
+    // EFFECTS:  draws the hero onto g on a fixed location
     private void drawHero(Graphics g) {
         Color savedCol = g.getColor();
         g.setColor(new Color(210, 29, 29));
@@ -159,11 +167,11 @@ public class GameWorldPanel extends JComponent {
     private void gameOver(Graphics g) {
         Color saved = g.getColor();
         g.setColor(new Color(0, 0, 0));
-        g.setFont(new Font("Arial", 20, 20));
+        g.setFont(new Font("Serif", 200, 200));
         FontMetrics fm = g.getFontMetrics();
         centreString(GAME_OVER, g, fm, gameOne.HEIGHT / 2);
-        centreString(REPLAY, g, fm, gameOne.HEIGHT / 2 + 50);
         g.setColor(saved);
+        System.exit(0);
     }
 
     // Centres a string on the screen

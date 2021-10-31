@@ -19,8 +19,8 @@ public class CardListTest {
     void getDesTest() {
         ArrayList<String> expectedAns = cl.getCardsDescription();
         int thisInd = 0;
-        for (int ind = 0; ind < expectedAns.size(); ind ++) {
-            if ((ind + 1)% 2 == 0) {
+        for (int ind = 0; ind < expectedAns.size(); ind++) {
+            if ((ind + 1) % 2 == 0) {
                 assertEquals(expectedAns.get(ind), cl.getCardByIndex(thisInd).getDescription());
                 thisInd += 1;
 
@@ -29,4 +29,5 @@ public class CardListTest {
             }
         }
     }
+
 }

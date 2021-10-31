@@ -5,17 +5,19 @@ import persistence.JsonReader;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-public class GraphicInterface extends JFrame {
+// extends JFrame, represents the composite of the visual interface
+public class GraphicInterface extends JFrame implements ActionListener {
     private static final String JSON_STORE = "./data/gameworld.json";
     private JsonReader jsonReader;
     private GameWorld gameWorld;
     private GameWorldPanel gamePanel;
     private HeroStatsPanel heroStats;
-    private Hero mainCharacter;
     private final int maxTurns;
     private int currentTurn;
 
@@ -32,10 +34,15 @@ public class GraphicInterface extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
+        JMenuBar menuBar = constructMenuBar();
         gamePanel = new GameWorldPanel(gameWorld);
         heroStats = new HeroStatsPanel(gameWorld);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
+
+
+        menuBar.setPreferredSize(new Dimension(GameWorld.WIDTH, 80));
+        setJMenuBar(menuBar);
 
         add(gamePanel);
         add(heroStats, BorderLayout.NORTH);
@@ -45,6 +52,56 @@ public class GraphicInterface extends JFrame {
         pack();
         centreOnScreen();
         setVisible(true);
+    }
+
+
+    // This method references code from this online website
+    // Link: https://www.geeksforgeeks.org/java-swing-jmenubar/
+    private JMenuBar constructMenuBar() {
+        Font font = new Font("Serif", Font.BOLD, 24);
+        JMenu mainMenu = new JMenu("Options");
+        mainMenu.setFont(font);
+        JMenuItem instructions = new JMenuItem("Instructions");
+        JMenuItem save = new JMenuItem("Save Game");
+        JMenuItem load = new JMenuItem("Load Game");
+        JMenuItem quit = new JMenuItem("Quit Game");
+
+        instructions.addActionListener(this);
+        save.addActionListener(this);
+        load.addActionListener(this);
+        quit.addActionListener(this);
+        instructions.setFont(font);
+        save.setFont(font);
+        load.setFont(font);
+        quit.setFont(font);
+
+        mainMenu.add(instructions);
+        mainMenu.add(save);
+        mainMenu.add(load);
+        mainMenu.add(quit);
+        JMenuBar newBar = new JMenuBar();
+        newBar.add(mainMenu);
+
+        return newBar;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String s = e.getActionCommand();
+        switch (s) {
+            case ("Instructions"):
+                break;
+            case ("Save Game"):
+                gameWorld.saveGameWorld();
+                break;
+            case ("Load Game"):
+                loadGameWorld();
+                break;
+            case ("Quit Game"):
+                gameWorld.setGameOver();
+                break;
+        }
+        updateThenRepaint();
     }
 
 
@@ -68,6 +125,7 @@ public class GraphicInterface extends JFrame {
         }
     }
 
+
     // key handler
     private class KeyHandler extends KeyAdapter {
         @Override
@@ -77,6 +135,8 @@ public class GraphicInterface extends JFrame {
     }
 
 
+    //MODIFIES: this
+    // EFFECTS: updates gameWorld then reconstructs world objects
     private void updateThenRepaint() {
         gameWorld.update();
         heroStats.removeAll();
@@ -86,6 +146,8 @@ public class GraphicInterface extends JFrame {
         gamePanel.repaint();
     }
 
+    //MODIFIES: this
+    // EFFECTS: updates currentTurn, if currentTurn == 0 then set it to max turns and moveMonsters
     private void updateWorld() {
         currentTurn -= 1;
         if (currentTurn == 0) {
@@ -98,7 +160,8 @@ public class GraphicInterface extends JFrame {
 
     // Responds to key press codes
     // MODIFIES: this
-    // EFFECTS: //TODO
+    // EFFECTS: uses card
+    // This method uses references code from this website:
     // https://www.programcreek.com/java-api-examples/?class=java.awt.event.KeyEvent&method=VK_R
     public void processCommand(int keyCode) {
         updateWorld();

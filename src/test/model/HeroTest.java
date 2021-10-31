@@ -205,4 +205,24 @@ class HeroTest {
         assertEquals(num - 1, aHero.getCardInventoryLength());
     }
 
+
+    @Test
+    void notValidIndexUseCard() {
+        aHero.resetCardInventory();
+        aHero.getAttacked(5);
+        aHero.useCard(-1, new ArrayList<>() );
+        assertEquals(aHero.getCurrentHealth(), 5);
+        aHero.useCard(10, new ArrayList<>() );
+        assertEquals(aHero.getCurrentHealth(), 5);
+    }
+
+    @Test
+    void notValidIndexUseCardWithFullInventory() {
+        aHero.getAttacked(5);
+        aHero.useCard(-1, new ArrayList<>() );
+        assertEquals(aHero.getCurrentHealth(), 5);
+        aHero.useCard(10, new ArrayList<>() );
+        assertEquals(aHero.getCurrentHealth(), 5);
+    }
+
 }
