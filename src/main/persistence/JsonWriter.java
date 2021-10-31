@@ -1,6 +1,5 @@
 package persistence;
 
-import model.Hero;
 import org.json.JSONObject;
 import ui.GameWorld;
 

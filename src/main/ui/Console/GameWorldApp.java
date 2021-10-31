@@ -1,8 +1,9 @@
-package ui;
+package ui.Console;
 
 import model.Hero;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.GameWorld;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class GameWorldApp {
         gameOne = new GameWorld(250);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        runGameWorld();
     }
 
     // MODIFIES: this
@@ -36,7 +38,6 @@ public class GameWorldApp {
         mainCharacter = new Hero(1, nameOfHero);
         gameOne.addHeroToGame(mainCharacter);
         maxTurns = mainCharacter.getMaxTurns();
-        runGameWorld();
     }
 
     // MODIFIES: this

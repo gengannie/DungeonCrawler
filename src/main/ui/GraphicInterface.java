@@ -6,8 +6,6 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -15,7 +13,6 @@ import java.util.Scanner;
 
 public class GraphicInterface extends JFrame {
     private static final String JSON_STORE = "./data/gameworld.json";
-    private static final int INTERVAL = 10;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private GameWorld gameWorld;
@@ -24,44 +21,37 @@ public class GraphicInterface extends JFrame {
     private Scanner scanner;
     private Hero mainCharacter;
     private int maxTurns;
+    private int currentTurn;
+
 
     // Constructs main window
     // effects: sets up window in which Space Invaders game will be played
-    public GraphicInterface() {
+    public GraphicInterface(String nameOfHero) throws IOException {
         super("Dungeon Crawler: Too Many Rats Edition");
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        gameWorld = new GameWorld(250);
+        gameWorld.addHeroToGame(new Hero(3, nameOfHero));
+        maxTurns = gameWorld.getHero().getMaxTurns();
+        gameWorld.updateMonsterSight();
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
-        gameWorld = new GameWorld(250);
-        setUpWorld();
         gamePanel = new GameWorldPanel(gameWorld);
         heroStats = new HeroStatsPanel(gameWorld);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setUndecorated(false);
+
         add(gamePanel);
         add(heroStats, BorderLayout.NORTH);
         addKeyListener(new KeyHandler());
+        currentTurn = maxTurns;
+
         pack();
         centreOnScreen();
         setVisible(true);
     }
 
-    // runs graphical world
-    public static void main(String[] args) {
-        new GraphicInterface();
-    }
-
-
-    // MODIFIES: this
-    // EFFECTS: initializes GameWorld
-    private void setUpWorld() {
-        scanner = new Scanner(System.in);
-        gameWorld.displayIntroMessage();
-        String nameOfHero = scanner.nextLine();
-        mainCharacter = new Hero(1, nameOfHero);
-        gameWorld.addHeroToGame(mainCharacter);
-        maxTurns = mainCharacter.getMaxTurns();
-        gameWorld.updateMonsterSight();
-    }
 
     //MODIFIES: this
     //EFFECTS: sets up game as a new game
@@ -89,6 +79,17 @@ public class GraphicInterface extends JFrame {
         }
     }
 
+
+    private void updateWorld() {
+        currentTurn -= 1;
+        if (currentTurn == 0) {
+            currentTurn = maxTurns;
+        }
+        gameWorld.update();
+        gamePanel.repaint();
+        heroStats.update();
+    }
+
     // Responds to key press codes
     // MODIFIES: this
     // EFFECTS: //TODO
@@ -100,9 +101,11 @@ public class GraphicInterface extends JFrame {
                 break;
             case (KeyEvent.VK_2):
                 //move
+                gameWorld.moveHero(1, 1);
                 break;
             case (KeyEvent.VK_3):
                 //attack monsters
+                gameWorld.attackMonsters();
                 break;
             case (KeyEvent.VK_S):
                 gameWorld.saveGameWorld();
@@ -116,9 +119,7 @@ public class GraphicInterface extends JFrame {
                 gameWorld.setGameOver();
                 break;
         }
-        gameWorld.update();
-        gamePanel.repaint();
-        heroStats.update();
+        updateWorld();
     }
 
     // Centres frame on desktop
@@ -128,7 +129,6 @@ public class GraphicInterface extends JFrame {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2);
     }
-
 
 
 }
