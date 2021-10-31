@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class HeroStatsPanel extends JPanel {
     private GameWorld gameWorld;
+    private static final String FONT_USED = Font.DIALOG_INPUT;
     private static final String HEALTH_TXT = "Health: ";
     private static final String MANA_TXT = "Mana: ";
     private static final String ATTACK_TXT = "Attack: ";
@@ -30,11 +31,11 @@ public class HeroStatsPanel extends JPanel {
 
     private void construct() {
         heroHealthLbl = new JLabel(HEALTH_TXT + hero.getCurrentHealth());
-        heroHealthLbl.setFont(new Font("Calibri", Font.BOLD, 50));
+        heroHealthLbl.setFont(new Font(FONT_USED, Font.BOLD, 50));
         heroManaLbl = new JLabel(MANA_TXT + hero.getManaBar());
-        heroManaLbl.setFont(new Font("Calibri", Font.BOLD, 50));
+        heroManaLbl.setFont(new Font(FONT_USED, Font.BOLD, 50));
         heroAttackLbl = new JLabel(ATTACK_TXT + hero.getHitPoints());
-        heroAttackLbl.setFont(new Font("Calibri", Font.BOLD, 50));
+        heroAttackLbl.setFont(new Font(FONT_USED, Font.BOLD, 50));
         add(heroHealthLbl);
         add(Box.createHorizontalStrut(100));
         add(heroManaLbl);

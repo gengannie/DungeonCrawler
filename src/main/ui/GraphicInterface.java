@@ -77,17 +77,21 @@ public class GraphicInterface extends JFrame {
     }
 
 
+    private void updateThenRepaint() {
+        gameWorld.update();
+        heroStats.removeAll();
+        heroStats.revalidate();
+        heroStats.update();
+        gamePanel.revalidate();
+        gamePanel.repaint();
+    }
+
     private void updateWorld() {
         currentTurn -= 1;
         if (currentTurn == 0) {
             currentTurn = maxTurns;
             gameWorld.moveMonsters();
-            gameWorld.update();
-
-            heroStats.removeAll();
-            heroStats.revalidate();
-            heroStats.update();
-            gamePanel.repaint();
+            updateThenRepaint();
         }
 
     }
@@ -100,33 +104,36 @@ public class GraphicInterface extends JFrame {
         updateWorld();
         switch (keyCode) {
             case (KeyEvent.VK_1):
-                //display cards
+                gameWorld.processCardBehavior(0);
+                System.out.println("Used card");
                 break;
             case (KeyEvent.VK_2):
+                gameWorld.processCardBehavior(1);
+                break;
+            case (KeyEvent.VK_W):
                 //move
                 gameWorld.moveHero(1, 1);
                 break;
-            case (KeyEvent.VK_3):
+            case (KeyEvent.VK_A):
                 //attack monsters
                 gameWorld.attackMonsters();
                 break;
         }
         checkIfSaveOrLoad(keyCode);
-
-        gameWorld.update();
-        heroStats.removeAll();
-        heroStats.revalidate();
-        heroStats.update();
-        gamePanel.repaint();
+        updateThenRepaint();
 
     }
 
     private void checkIfSaveOrLoad(int keyCode) {
         switch (keyCode) {
+            case (KeyEvent.VK_E):
+                //display cards
+                gamePanel.incrementPos();
+                break;
             case (KeyEvent.VK_S):
                 gameWorld.saveGameWorld();
                 break;
-            case (KeyEvent.VK_L):
+            case (KeyEvent.VK_D):
                 loadGameWorld();
                 break;
             case (KeyEvent.VK_Q):

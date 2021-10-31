@@ -200,4 +200,5 @@ public class Hero {
     public int getCardInventoryLength() {
         return cardInventory.getSize();
     }
+
 }

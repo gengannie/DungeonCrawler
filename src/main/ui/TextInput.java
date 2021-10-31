@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class TextInput extends JFrame implements ActionListener {
-    private JButton submit;
-    private JTextField inputField;
+    private final JTextField inputField;
+    private static final String ENTER_NAME = "Please enter your hero's name: ";
     private JLabel label;
     private String name;
 
@@ -17,10 +17,13 @@ public class TextInput extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
 
-        submit = new JButton("Done!");
+        JButton submit = new JButton("Done!");
         submit.addActionListener(this);
 
+        label = new JLabel(ENTER_NAME);
+        label.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 50));
         inputField = new JTextField(20);
+        contentPanel.add(label);
         Font bigFont = inputField.getFont().deriveFont(Font.PLAIN, 50);
         inputField.setFont(bigFont);
         contentPanel.add(inputField);

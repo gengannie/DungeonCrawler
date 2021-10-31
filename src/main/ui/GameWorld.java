@@ -17,7 +17,7 @@ import java.util.Random;
 public class GameWorld implements Write {
     private static final String JSON_STORE = "./data/gameworld.json";
     public static final int WIDTH = 1600;
-    public static final int HEIGHT = 1000;
+    public static final int HEIGHT = 1600;
     protected static final int SQUARE_DIM = 20;
     protected int numOfMonsters;
     protected int[][] worldGrid;
