@@ -231,6 +231,17 @@ public class GameWorld implements Write {
         if (hero.getIsDead()) {
             gameOver();
         }
+        for (int i = hero.getPosX() - hero.VISIBLE; i <= hero.VISIBLE + hero.getPosX(); i++) {
+            for (int j = hero.getPosY() - hero.VISIBLE; j <= hero.VISIBLE + hero.getPosY(); j++) {
+                if ((i >= 0 && j >= 0) && worldGrid[i][j] == 1) {
+                    for (SmallMonsters m : allMonsters) {
+                        if (m.getIsDead()) {
+                            removeFromWorldGrid(m);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     //EFFECTS: terminates program if hero has died
@@ -251,10 +262,7 @@ public class GameWorld implements Write {
     public void attackMonsters() {
         if (canAttack) {
             for (SmallMonsters sm : allMonsters) {
-                if (sm.getIsDead() == true) {
-                    allMonsters.remove(sm);
-                    removeFromWorldGrid(sm);
-                } else if (sm.getIfInSight() && sm.getIsDead() == false) {
+                if (sm.getIfInSight() && sm.getIsDead() == false) {
                     sm.getHit(hero.getHitPoints());
                     System.out.println("You just hit this " + sm.getName());
                     if (sm.getIsDead()) {

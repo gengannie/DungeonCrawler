@@ -46,6 +46,11 @@ public class HeroStatsPanel extends JPanel {
         add(heroAttackLbl);
     }
 
+    public void loadNewGame(GameWorld newGame) {
+        gameWorld = newGame;
+        this.hero = gameWorld.getHero();
+    }
+
     // Updates the stats panel
     // MODIFIES: this
     // EFFECTS: reconstructs the world and then replaces them onto visual surface

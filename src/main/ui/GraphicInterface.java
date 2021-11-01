@@ -49,6 +49,7 @@ public class GraphicInterface extends JFrame implements ActionListener {
         addKeyListener(new KeyHandler());
         currentTurn = maxTurns;
 
+        setBackground(Color.BLACK);
         pack();
         centreOnScreen();
         setVisible(true);
@@ -109,8 +110,8 @@ public class GraphicInterface extends JFrame implements ActionListener {
     //EFFECTS: sets up game as a new game
     public void loadGame(GameWorld oldGame) throws IOException {
         gameWorld = oldGame;
-        gamePanel = new GameWorldPanel(gameWorld);
-        heroStats = new HeroStatsPanel(gameWorld);
+        gamePanel.loadNewGame(gameWorld);
+        heroStats.loadNewGame(gameWorld);
     }
 
     // MODIFIES: this
@@ -119,6 +120,7 @@ public class GraphicInterface extends JFrame implements ActionListener {
         try {
             jsonReader = new JsonReader(JSON_STORE);
             loadGame(jsonReader.read());
+            updateThenRepaint();
             System.out.println("Loaded " + "recent game" + " from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
@@ -189,10 +191,6 @@ public class GraphicInterface extends JFrame implements ActionListener {
 
     private void checkIfSaveOrLoad(int keyCode) {
         switch (keyCode) {
-            case (KeyEvent.VK_E):
-                //display cards
-                gamePanel.incrementPos();
-                break;
             case (KeyEvent.VK_S):
                 gameWorld.saveGameWorld();
                 break;

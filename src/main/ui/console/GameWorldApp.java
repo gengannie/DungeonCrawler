@@ -101,6 +101,7 @@ public class GameWorldApp {
         } else if (input.equals("3")) {
             gameOne.attackMonsters();
         }
+        gameOne.updateDeaths();
 
     }
 }
