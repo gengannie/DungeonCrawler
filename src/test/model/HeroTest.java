@@ -18,20 +18,25 @@ class HeroTest {
 
     @Test
     void updateMan() {
-        aHero.updateManaBar(4);
+        aHero.updateManaBar(4, 0);
         assertEquals(aHero.getManaBar(), 4);
     }
 
     @Test
     void updateToMaxMana(){
-        aHero.updateManaBar(10);
+        aHero.updateManaBar(10,0);
         assertEquals(aHero.getManaBar(), 0);
         assertEquals(aHero.getCardDes().size() / 2, 3);
+        assertEquals(aHero.getCardInventoryLength(), 3);
+        aHero.updateManaBar(10,1);
+        assertEquals(aHero.getManaBar(), 0);
+        assertEquals(aHero.getCardDes().size() / 2, 4);
+        assertEquals(aHero.getCardInventoryLength(), 4);
     }
 
     @Test
     void updateToOverMaxMana(){
-        aHero.updateManaBar(15);
+        aHero.updateManaBar(15,0);
         assertEquals(aHero.getManaBar(), 5);
         assertEquals(aHero.getCardDes().size() / 2, 3);
     }

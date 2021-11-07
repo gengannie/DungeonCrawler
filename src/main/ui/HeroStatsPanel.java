@@ -5,6 +5,9 @@ import model.Hero;
 import javax.swing.*;
 import java.awt.*;
 
+// This class references code from CPSC210/B02-SpaceInvadersBase
+// Link: https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
+
 // JPanel to display hero statistics (health, attack points, and so on as separate JLabel objects)
 public class HeroStatsPanel extends JPanel {
     private GameWorld gameWorld;
@@ -24,7 +27,7 @@ public class HeroStatsPanel extends JPanel {
     //EFFECTS: sets the background color, draws initial label
     public HeroStatsPanel(GameWorld world) {
         gameWorld = world;
-        setBackground(new Color(124, 130, 199));
+        setBackground(new Color(154, 154, 154, 255));
         this.hero = gameWorld.getHero();
         construct();
 

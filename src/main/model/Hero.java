@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.lang.Math;
 
 // Main character of this game
 public class Hero {
@@ -38,11 +40,15 @@ public class Hero {
 
     //MODIFIES: this
     //EFFECTS: updates mana bar, if exceeds FULL_MANA, a new card is placed in inventory and returns updated mana
-    public int updateManaBar(int points) {
+    public int updateManaBar(int points, int randInt) {
         manaBar += points;
         if (manaBar >= FULL_MANA) {
             manaBar -= FULL_MANA;
-            cardInventory.getNewStunCard();
+            if (randInt == 0) {
+                cardInventory.getNewStunCard();
+            } else {
+                cardInventory.getNewHealingPot();
+            }
         }
         return manaBar;
 

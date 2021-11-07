@@ -26,6 +26,7 @@ public class GraphicInterface extends JFrame implements ActionListener {
     // effects: sets up window in which Space Invaders game will be played
     public GraphicInterface(String nameOfHero) throws IOException {
         super("Dungeon Crawler: Too Many Rats Edition");
+
         jsonReader = new JsonReader(JSON_STORE);
         gameWorld = new GameWorld(250);
         gameWorld.addHeroToGame(new Hero(3, nameOfHero));
@@ -34,6 +35,8 @@ public class GraphicInterface extends JFrame implements ActionListener {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
+        Image icon = Toolkit.getDefaultToolkit().getImage("./data/hero.png");
+        this.setIconImage(icon);
         JMenuBar menuBar = constructMenuBar();
         gamePanel = new GameWorldPanel(gameWorld);
         heroStats = new HeroStatsPanel(gameWorld);
@@ -48,8 +51,6 @@ public class GraphicInterface extends JFrame implements ActionListener {
         add(heroStats, BorderLayout.NORTH);
         addKeyListener(new KeyHandler());
         currentTurn = maxTurns;
-
-        setBackground(Color.BLACK);
         pack();
         centreOnScreen();
         setVisible(true);
@@ -170,7 +171,6 @@ public class GraphicInterface extends JFrame implements ActionListener {
         switch (keyCode) {
             case (KeyEvent.VK_1):
                 gameWorld.processCardBehavior(0);
-                System.out.println("Used card");
                 break;
             case (KeyEvent.VK_2):
                 gameWorld.processCardBehavior(1);
@@ -189,6 +189,9 @@ public class GraphicInterface extends JFrame implements ActionListener {
 
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: loads, saves, or quits the game according to key inputs
     private void checkIfSaveOrLoad(int keyCode) {
         switch (keyCode) {
             case (KeyEvent.VK_S):

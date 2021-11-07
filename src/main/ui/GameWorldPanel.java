@@ -2,8 +2,6 @@ package ui;
 
 import model.Hero;
 import model.SmallMonsters;
-import persistence.JsonReader;
-import persistence.JsonWriter;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -22,6 +20,9 @@ public class GameWorldPanel extends JComponent {
     private static final String JSON_STORE = "./data/gameworld.json";
     final BufferedImage heroImage = ImageIO.read(new File("./data/hero.png"));
     final BufferedImage ratImage = ImageIO.read(new File("./data/rat.png"));
+    final BufferedImage backgroundImage = ImageIO.read(new File("./data/background.jpg"));
+    final BufferedImage stunImage = ImageIO.read(new File("./data/stun.png"));
+    final BufferedImage healImage = ImageIO.read(new File("./data/healing.png"));
     private static final String GAME_OVER = "Game Over!";
     private static int CARD_POS = 0;
     private int heroPosX;
@@ -40,7 +41,6 @@ public class GameWorldPanel extends JComponent {
         heroPosY = (GameWorld.HEIGHT - 400) / 2;
         setPreferredSize(new Dimension(GameWorld.WIDTH, GameWorld.HEIGHT));
         WORLD_BLOCK = ((GameWorld.WIDTH - 600) / (gameOne.getHero().VISIBLE * 2 + 1));
-        CARD_POS = GameWorld.HEIGHT - WORLD_BLOCK;
     }
 
 
@@ -65,6 +65,7 @@ public class GameWorldPanel extends JComponent {
     // modifies: g
     // effects:  draws the game onto g
     private void drawGame(Graphics g) throws IOException {
+        g.drawImage(backgroundImage, -50, -50, this);
         drawHero(g);
         drawMonsters(g);
         drawCards(g);
@@ -100,18 +101,11 @@ public class GameWorldPanel extends JComponent {
     //MODIFIES: g
     //EFFECTS: draws each individual card onto the world component
     private void drawCard(String name, String des, Graphics g, int index) {
-        Color savedCol = g.getColor();
-
         if (name.equals("Healing Potion")) {
-            g.setColor(new Color(219, 169, 191));
+            g.drawImage(resizeImage(healImage), WORLD_BLOCK / 2,index * WORLD_BLOCK, null);
         } else {
-            g.setColor(new Color(83, 18, 47));
+            g.drawImage(resizeImage(stunImage), WORLD_BLOCK / 2, index * WORLD_BLOCK,null);
         }
-        g.fillRect(index * WORLD_BLOCK, CARD_POS, WORLD_BLOCK, WORLD_BLOCK);
-
-        //g.drawImage(image, calculatePosX(sm.getPosX()), calculatePosY(sm.getPosY()), null);
-        g.setColor(savedCol);
-
     }
 
     //EFFECTS: returns a position corresponding to world canvas
@@ -130,16 +124,19 @@ public class GameWorldPanel extends JComponent {
         return (x * WORLD_BLOCK) + heroPosY;
     }
 
+    //EFFECTS: scales image into WORLD_BLOCK * WORLD_BLOCK dimensions
+    private Image resizeImage(BufferedImage image) {
+        return image.getScaledInstance(WORLD_BLOCK, WORLD_BLOCK, Image.SCALE_DEFAULT);
+    }
+
     // MODIFIES: g
     // EFFECTS:  draws the SmallMonster sm onto g
     private void drawMonster(Graphics g, SmallMonsters sm) throws IOException {
-        Color savedCol = g.getColor();
 
-        //g.setColor(new Color(159, 111, 194));
+
         //g.fillOval(calculatePosX(sm.getPosX()), calculatePosY(sm.getPosY()), WORLD_BLOCK, WORLD_BLOCK);
-        ratImage.getScaledInstance(WORLD_BLOCK / 7, WORLD_BLOCK / 7, Image.SCALE_DEFAULT);
-        g.drawImage(ratImage, calculatePosX(sm.getPosX()), calculatePosY(sm.getPosY()), null);
-        g.setColor(savedCol);
+        g.drawImage(resizeImage(ratImage), calculatePosX(sm.getPosX()), calculatePosY(sm.getPosY()), null);
+
     }
 
     // MODIFIES: g

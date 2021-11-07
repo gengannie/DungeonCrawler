@@ -17,7 +17,7 @@ import java.util.Random;
 public class GameWorld implements Write {
     private static final String JSON_STORE = "./data/gameworld.json";
     public static final int WIDTH = 1600;
-    public static final int HEIGHT = 1600;
+    public static final int HEIGHT = 1000;
     protected static final int SQUARE_DIM = 20;
     protected int numOfMonsters;
     protected int[][] worldGrid;
@@ -205,7 +205,6 @@ public class GameWorld implements Write {
         for (SmallMonsters m : allMonsters) {
             if (m.getIfInSight() && m.getCanMove() == true && !m.getIsDead()) {
                 m.attack(hero);
-                System.out.println(hero.getCurrentHealth());
             }
         }
 
@@ -270,7 +269,9 @@ public class GameWorld implements Write {
                         System.out.println("A rat just died!");
                         removeFromWorldGrid(sm);
                     }
-                    hero.updateManaBar(hero.getHitPoints());
+                    Random rand = new Random();
+                    int randInt = rand.nextInt(2);
+                    hero.updateManaBar(hero.getHitPoints(), randInt);
                     break;
                 }
             }
