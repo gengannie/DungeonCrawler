@@ -44,6 +44,7 @@ public class GameWorldPanel extends JComponent {
     }
 
 
+    //EFFECTS: paints game on this JPanel object
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -57,13 +58,14 @@ public class GameWorldPanel extends JComponent {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets gameOne to be a new Game (read by JsonReader)
     public void loadNewGame(GameWorld newGame) {
         gameOne = newGame;
     }
 
-    // Draws the game
-    // modifies: g
-    // effects:  draws the game onto g
+    // MODIFIES: g
+    // EFFECTS:  draws the game onto g, separated into methods involving the hero, monsters, and cards
     private void drawGame(Graphics g) throws IOException {
         g.drawImage(backgroundImage, -50, -50, this);
         drawHero(g);
@@ -102,9 +104,9 @@ public class GameWorldPanel extends JComponent {
     //EFFECTS: draws each individual card onto the world component
     private void drawCard(String name, String des, Graphics g, int index) {
         if (name.equals("Healing Potion")) {
-            g.drawImage(resizeImage(healImage), WORLD_BLOCK / 2,index * WORLD_BLOCK, null);
+            g.drawImage(resizeImage(healImage), WORLD_BLOCK / 2, index * WORLD_BLOCK, null);
         } else {
-            g.drawImage(resizeImage(stunImage), WORLD_BLOCK / 2, index * WORLD_BLOCK,null);
+            g.drawImage(resizeImage(stunImage), WORLD_BLOCK / 2, index * WORLD_BLOCK, null);
         }
     }
 

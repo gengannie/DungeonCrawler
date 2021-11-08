@@ -35,14 +35,12 @@ public class GraphicInterface extends JFrame implements ActionListener {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
-        Image icon = Toolkit.getDefaultToolkit().getImage("./data/hero.png");
-        this.setIconImage(icon);
+        changeIcon();
         JMenuBar menuBar = constructMenuBar();
         gamePanel = new GameWorldPanel(gameWorld);
         heroStats = new HeroStatsPanel(gameWorld);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
-
 
         menuBar.setPreferredSize(new Dimension(GameWorld.WIDTH, 80));
         setJMenuBar(menuBar);
@@ -56,6 +54,12 @@ public class GraphicInterface extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    //MODIFIES: this
+    //EFFECTS: changes little game icon on GUI
+    private void changeIcon() {
+        Image icon = Toolkit.getDefaultToolkit().getImage("./data/hero.png");
+        this.setIconImage(icon);
+    }
 
     // This method references code from this online website
     // Link: https://www.geeksforgeeks.org/java-swing-jmenubar/
@@ -87,6 +91,7 @@ public class GraphicInterface extends JFrame implements ActionListener {
         return newBar;
     }
 
+    //EFFECTS: processes based on the Menu buttons user presses
     @Override
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();
@@ -116,7 +121,7 @@ public class GraphicInterface extends JFrame implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads gameWorld from saved json file
     public void loadGameWorld() {
         try {
             jsonReader = new JsonReader(JSON_STORE);
@@ -130,6 +135,7 @@ public class GraphicInterface extends JFrame implements ActionListener {
 
 
     // key handler
+    //EFFECTS: processes command based on keyboard key pressed
     private class KeyHandler extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
@@ -163,7 +169,8 @@ public class GraphicInterface extends JFrame implements ActionListener {
 
     // Responds to key press codes
     // MODIFIES: this
-    // EFFECTS: uses card
+    // EFFECTS: responds to 1, 2, W, and A key pressed by user
+
     // This method uses references code from this website:
     // https://www.programcreek.com/java-api-examples/?class=java.awt.event.KeyEvent&method=VK_R
     public void processCommand(int keyCode) {

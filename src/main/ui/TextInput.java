@@ -14,13 +14,14 @@ public class TextInput extends JFrame implements ActionListener {
     private JLabel label;
     private String name;
 
+    //EFFECTS: constructs JTextLabel for a place to enter name
     public TextInput() {
         JPanel contentPanel = new JPanel();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
 
         JButton submit = new JButton("Done!");
-        submit.setPreferredSize(new Dimension(100,50));
+        submit.setPreferredSize(new Dimension(100, 50));
         submit.setFont(new Font(Font.DIALOG_INPUT, Font.BOLD, 20));
         submit.addActionListener(this);
 
@@ -40,11 +41,15 @@ public class TextInput extends JFrame implements ActionListener {
         setVisible(true);
     }
 
+    //MODIFIES: this
+    //EFFECTS: starting point of this game, starts with entering name
+    // throws IO Exception if cannot find image in GraphicInterface class
     public static void main(String[] args) throws IOException {
         new TextInput();
 
     }
 
+    // EFFECTS: if "Done!" button pressed, game is launched, IO Exception is caught and a stack trace gets printed out
     @Override
     public void actionPerformed(ActionEvent e) {
         String s = e.getActionCommand();

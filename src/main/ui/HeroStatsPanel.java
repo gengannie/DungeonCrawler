@@ -42,6 +42,7 @@ public class HeroStatsPanel extends JPanel {
         heroManaLbl.setFont(new Font(FONT_USED, Font.BOLD, 50));
         heroAttackLbl = new JLabel(ATTACK_TXT + hero.getHitPoints());
         heroAttackLbl.setFont(new Font(FONT_USED, Font.BOLD, 50));
+
         add(heroHealthLbl);
         add(Box.createHorizontalStrut(100));
         add(heroManaLbl);

@@ -1,8 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.lang.Math;
 
 // Main character of this game
 public class Hero {

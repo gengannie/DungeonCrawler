@@ -181,6 +181,8 @@ public class GameWorld implements Write {
         return isGameOver;
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets the isGameOver boolean to true, called when game is over
     public void setGameOver() {
         isGameOver = true;
     }
