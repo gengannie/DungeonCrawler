@@ -39,8 +39,6 @@ public class GraphicInterface extends JFrame implements ActionListener {
         JMenuBar menuBar = constructMenuBar();
         gamePanel = new GameWorldPanel(gameWorld);
         heroStats = new HeroStatsPanel(gameWorld);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setUndecorated(false);
 
         menuBar.setPreferredSize(new Dimension(GameWorld.WIDTH, 80));
         setJMenuBar(menuBar);
@@ -63,6 +61,7 @@ public class GraphicInterface extends JFrame implements ActionListener {
 
     // This method references code from this online website
     // Link: https://www.geeksforgeeks.org/java-swing-jmenubar/
+    // EFFECTS: constructs a new version of the menu bar
     private JMenuBar constructMenuBar() {
         Font font = new Font("Serif", Font.BOLD, 24);
         JMenu mainMenu = new JMenu("Options");

@@ -65,9 +65,13 @@ public class TextInput extends JFrame implements ActionListener {
         }
     }
 
+
+    // This method references code from CPSC210/B02-SpaceInvadersBase
+    // Link: https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
+
     // Centres frame on desktop
-    // modifies: this
-    // effects:  location of frame is set so frame is centred on desktop
+    // MODIFIES: this
+    // EFFECTS:  location of frame is set so frame is centred on desktop
     private void centreOnScreen() {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2);
