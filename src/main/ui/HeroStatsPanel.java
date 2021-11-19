@@ -50,6 +50,8 @@ public class HeroStatsPanel extends JPanel {
         add(heroAttackLbl);
     }
 
+    // MODIFIES: this
+    // EFFECTS: replaces this gameWorld and hero with that read by Jsonreader
     public void loadNewGame(GameWorld newGame) {
         gameWorld = newGame;
         this.hero = gameWorld.getHero();
