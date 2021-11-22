@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+
 // Main character of this game
 public class Hero {
     private static final int NUM_OF_TURNS = 2;
@@ -44,9 +45,12 @@ public class Hero {
             manaBar -= FULL_MANA;
             if (randInt == 0) {
                 cardInventory.getNewStunCard();
+                EventLog.getInstance().logEvent(new Event("New stun card added to inventory!"));
             } else {
                 cardInventory.getNewHealingPot();
+                EventLog.getInstance().logEvent(new Event("New healing card added to inventory!"));
             }
+
         }
         return manaBar;
 
@@ -68,6 +72,7 @@ public class Hero {
     //EFFECTS: increase number of health points by healPoints if health is less than MAX_HEALTH
 
     public void heal(int healPoints) {
+        EventLog.getInstance().logEvent(new Event("Hero is healed for " + healPoints));
         if (health == 0 && healPoints > 0) {
             isDead = false;
         }
@@ -81,6 +86,7 @@ public class Hero {
     //MODIFIES: this
     //EFFECTS: decrease health by attackPoints. if health <= 0, set isDead to true
     public void getAttacked(int attackPoints) {
+        EventLog.getInstance().logEvent(new Event("Hero got attacked by " + attackPoints));
         health -= attackPoints;
         if (health <= 0) {
             isDead = true;
@@ -170,8 +176,10 @@ public class Hero {
             Cards returnedCard = cardInventory.getCardByIndex(indexInList);
             if (returnedCard.getNameOfCard().equals("Healing Potion")) {
                 returnedCard.performOnHero(this);
+                EventLog.getInstance().logEvent(new Event("Healing Card used!"));
             } else {
                 returnedCard.performOnMonsters(this, allMonsters);
+                EventLog.getInstance().logEvent(new Event("Stun card used!"));
             }
             cardInventory.removeCard(indexInList);
         }

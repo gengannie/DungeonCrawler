@@ -49,6 +49,7 @@ public class TextInput extends JFrame implements ActionListener {
 
     }
 
+    // MODIFIES: this
     // EFFECTS: if "Done!" button pressed, game is launched, IO Exception is caught and a stack trace gets printed out
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -15,12 +15,10 @@ Those who like card-games, board games, DND games, and other RPG games might lik
 ##### Why is this project of interest to you?
 This project is of interest to me because I spent a lot of time playing the title "Demeo" on Oculus VR.
 I cannot find a similar game on PC, as this game title is only released on virtual reality. 
-Thus, I would like to make a PC version of this game :D
+Thus, I would like to make a PC version of this game.
 
 
 ##**User Stories**
-Finished:
-
 - As a user, I want to be able to add a Hero into the world and start playing 
 - As a user, I want to be able to add to Hero's experience mana by attacking and removing monsters from the world
 - As a user, I want to be able to add cards in my inventory by attacking a certain number of monsters
@@ -31,8 +29,6 @@ Finished:
 - As a user, I want to be able to select a card in my inventory and use it
 - As a user, I want the game world to be populated with monsters and generic objects
 
-Not Yet Integrated Into UI:
-- As a user, I want to be able to add coins to my inventory by picking up a coin pile in the world
 
 **Phase 2**
 - As a user, when I am displayed my options in the game, I want to be able to save my game as a checkpoint

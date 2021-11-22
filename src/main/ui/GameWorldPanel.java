@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Hero;
 import model.SmallMonsters;
 
@@ -10,6 +12,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 
 // This class references code from CPSC210/B02-SpaceInvadersBase
@@ -44,6 +48,7 @@ public class GameWorldPanel extends JComponent {
     }
 
 
+    // MODIFIES: this
     //EFFECTS: paints game on this JPanel object
     @Override
     protected void paintComponent(Graphics g) {
@@ -74,8 +79,8 @@ public class GameWorldPanel extends JComponent {
     }
 
 
-    // modifies: g
-    // effects:  draws the monsters onto g
+    // MODIFIES: g
+    // EFFECTS:  draws the monsters onto g
     private void drawMonsters(Graphics g) throws IOException {
         for (SmallMonsters next : gameOne.getMonsters()) {
             if (next.getIfInSight()) {

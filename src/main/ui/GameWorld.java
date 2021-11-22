@@ -1,8 +1,6 @@
 package ui;
 
-import model.Hero;
-import model.Rat;
-import model.SmallMonsters;
+import model.*;
 import org.json.JSONObject;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -10,6 +8,7 @@ import persistence.Write;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 // Represents the model and behavior of a console user-interface
@@ -184,6 +183,10 @@ public class GameWorld implements Write {
     //MODIFIES: this
     //EFFECTS: sets the isGameOver boolean to true, called when game is over
     public void setGameOver() {
+        Iterator<Event> printLogs = EventLog.getInstance().iterator();
+        while (printLogs.hasNext()) {
+            System.out.println(printLogs.next());
+        }
         isGameOver = true;
     }
 
@@ -247,6 +250,10 @@ public class GameWorld implements Write {
 
     //EFFECTS: terminates program if hero has died
     public void gameOver() {
+        Iterator<Event> printLogs = EventLog.getInstance().iterator();
+        while (printLogs.hasNext()) {
+            System.out.println(printLogs.next());
+        }
         System.out.println("Sorry, your hero has died :(");
         System.exit(-1);
     }
@@ -265,10 +272,8 @@ public class GameWorld implements Write {
             for (SmallMonsters sm : allMonsters) {
                 if (sm.getIfInSight() && sm.getIsDead() == false) {
                     sm.getHit(hero.getHitPoints());
-                    System.out.println("You just hit this " + sm.getName());
                     if (sm.getIsDead()) {
                         allMonsters.remove(sm);
-                        System.out.println("A rat just died!");
                         removeFromWorldGrid(sm);
                     }
                     Random rand = new Random();
