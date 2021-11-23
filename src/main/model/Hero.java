@@ -86,9 +86,9 @@ public class Hero {
     //MODIFIES: this
     //EFFECTS: decrease health by attackPoints. if health <= 0, set isDead to true
     public void getAttacked(int attackPoints) {
-        EventLog.getInstance().logEvent(new Event("Hero got attacked by " + attackPoints));
         health -= attackPoints;
         if (health <= 0) {
+            EventLog.getInstance().logEvent(new Event("Your hero has died :("));
             isDead = true;
         }
     }
@@ -101,6 +101,7 @@ public class Hero {
     //MODIFIES: this
     //EFFECTS: if health <= 0, set isDead to true
     public void setIsDead() {
+
         if (health <= 0) {
             isDead = true;
         } else {

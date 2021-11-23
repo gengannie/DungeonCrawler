@@ -254,7 +254,6 @@ public class GameWorld implements Write {
         while (printLogs.hasNext()) {
             System.out.println(printLogs.next());
         }
-        System.out.println("Sorry, your hero has died :(");
         System.exit(-1);
     }
 

@@ -34,6 +34,23 @@ Thus, I would like to make a PC version of this game.
 - As a user, when I am displayed my options in the game, I want to be able to save my game as a checkpoint
 - As a user, I want to be able to load an old game file and resume the game
 
+### Phase 4: Task 2 Sample EventLog
+``` 
+Mon Nov 22 14:30:32 PST 2021
+Stun card used!
+Mon Nov 22 14:30:32 PST 2021
+New stun card added to inventory!
+Mon Nov 22 14:30:34 PST 2021
+Hero is healed for 7
+Mon Nov 22 14:30:34 PST 2021
+Healing Card used!
+Mon Nov 22 14:30:36 PST 2021
+New stun card added to inventory!
+Mon Nov 22 14:30:38 PST 2021
+New stun card added to inventory!
+Mon Nov 22 14:30:39 PST 2021
+Your hero has died :( 
+
 
 
 
