@@ -1,5 +1,7 @@
 package ui.console;
 
+import model.Event;
+import model.EventLog;
 import model.Hero;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -7,13 +9,13 @@ import ui.GameWorld;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 // Class to run GameWorld on console, this class also contains methods for json to read/write
 public class GameWorldApp {
     private static final String JSON_STORE = "./data/gameworld.json";
     private GameWorld gameOne;
-    private JsonWriter jsonWriter;
     private JsonReader jsonReader;
     private Scanner scanner;
     private Hero mainCharacter;
@@ -24,7 +26,6 @@ public class GameWorldApp {
     public GameWorldApp() throws FileNotFoundException {
         scanner = new Scanner(System.in);
         gameOne = new GameWorld(250);
-        jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         runGameWorld();
     }
@@ -88,6 +89,10 @@ public class GameWorldApp {
     public void iterations(String input, GameWorld gameOne) {
         Scanner scanner = new Scanner(System.in);
         if (input.equals("QUIT")) {
+            Iterator<Event> printLogs = EventLog.getInstance().iterator();
+            while (printLogs.hasNext()) {
+                System.out.println(printLogs.next());
+            }
             System.exit(0);
         } else if (input.equals("1")) {
             gameOne.displayCardInfo();

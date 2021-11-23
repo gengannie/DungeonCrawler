@@ -23,7 +23,6 @@ public class GameWorld implements Write {
     protected ArrayList<SmallMonsters> allMonsters;
     protected boolean canAttack;
     private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
     private Hero hero;
     private boolean isGameOver;
 
@@ -32,7 +31,6 @@ public class GameWorld implements Write {
     public GameWorld(int numOfMonsters) {
         this.numOfMonsters = numOfMonsters;
         worldGrid = new int[SQUARE_DIM][SQUARE_DIM];
-        jsonReader = new JsonReader(JSON_STORE);
         allMonsters = new ArrayList<>();
         placeMonstersInWorld(numOfMonsters);
         canAttack = false;

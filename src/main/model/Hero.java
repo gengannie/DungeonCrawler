@@ -72,7 +72,7 @@ public class Hero {
     //EFFECTS: increase number of health points by healPoints if health is less than MAX_HEALTH
 
     public void heal(int healPoints) {
-        EventLog.getInstance().logEvent(new Event("Hero is healed for " + healPoints));
+        EventLog.getInstance().logEvent(new Event("Hero is healed for at most " + healPoints + " points"));
         if (health == 0 && healPoints > 0) {
             isDead = false;
         }
